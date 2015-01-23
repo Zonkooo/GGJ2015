@@ -2,9 +2,11 @@ var preloadCount = 0;
 var preloadTotal = 1;
 
 var stage;
-
 var imgPlayer1 = new Image();
 
+var player1;
+
+var isKeyPressed = [];
 
 function startGame()
 {
@@ -20,8 +22,8 @@ function startGame()
 
 function preloadAssets()
 {
-	imgPlayer.onload = preloadUpdate();
-	imgPlayer.src = "media/pacman.png";
+	imgPlayer1.onload = preloadUpdate();
+	imgPlayer1.src = "media/pacman.png";
 }
 
 function preloadUpdate()
@@ -35,15 +37,36 @@ function launchGame()
 {
 	stage = new createjs.Stage(document.getElementById("gameCanvas"));
 
-	
-
+	var bitmapPlayer1 = new createjs.Bitmap(imgPlayer1); // will become a sprite
+	player1 = new Player(bitmapPlayer1);
+	stage.addChild(player1.internalBitmap);
 
 	createjs.Ticker.setFPS(60);
 	createjs.Ticker.addEventListener("tick", update);
+
+
+	//manage keyboard state
+	document.onkeydown = function(e){
+	    var key = code(e);
+	    isKeyPressed[key] = true;
+	};
+	document.onkeyup = function(e){
+	    var key = code(e);
+	    isKeyPressed[key] = false;
+	};
 }
 
+function code(e)
+{
+	e = e || window.event;
+	return(e.keyCode || e.which);
+}
 
 function update(event)
 {
+	// Update players
+	player1.updateState();
+
+	// Update main scene
 	stage.update();
 }
