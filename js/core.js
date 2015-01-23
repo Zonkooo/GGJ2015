@@ -10,7 +10,7 @@ var player1;
 
 var isKeyPressed = [];
 
-var FPS = 10;
+var FPS = 5;
 var frameBeforeAction = FPS * 5;
 var elapsedFrames = 0;
 var gameState = "programActions";
@@ -85,13 +85,16 @@ function update(event)
 	if (gameState == "programActions")
 	{
 		elapsedFrames++;
+		console.log(elapsedFrames);
+		player1.updateProgramPhase();
+
+
 		if (elapsedFrames >= frameBeforeAction)
 		{
 			elapsedFrames = 0;
 			gameState = "playActions";
 		}
 
-		player1.updateProgramPhase();
 	}
 	else
 	{
