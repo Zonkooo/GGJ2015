@@ -5,7 +5,7 @@ function Board(sprites)
 	blockSize = 75;
 	blockExtraHeight = 25;
 
-	this.level = [ // 14 x 7 squares
+	level = [ // 14 x 7 squares
 	"..............",
 	".X............",
 	"..X...X.XXX...",
@@ -19,9 +19,9 @@ function Board(sprites)
 
 	this.Load = function()
 	{
-		for(l in this.level)
+		for(l in level)
 		{
-			line = this.level[l];
+			line = level[l];
 			for(c in line)
 			{
 				char = line[c];
