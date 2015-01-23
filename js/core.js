@@ -1,8 +1,10 @@
 var preloadCount = 0;
-var preloadTotal = 1;
+var preloadTotal = 3;
 
 var stage;
 var imgPlayer1 = new Image();
+var imgObstacle = new Image();
+var imgGround = new Image();
 
 var player1;
 
@@ -24,6 +26,12 @@ function preloadAssets()
 {
 	imgPlayer1.onload = preloadUpdate();
 	imgPlayer1.src = "media/pacman.png";
+	
+	imgObstacle.onload = preloadUpdate();
+	imgObstacle.src = "media/obstacle.png";
+
+	imgGround.onload = preloadUpdate();
+	imgGround.src = "media/ground.png";
 }
 
 function preloadUpdate()
@@ -35,12 +43,16 @@ function preloadUpdate()
 
 function launchGame()
 {
-	stage = new createjs.Stage(document.getElementById("gameCanvas"));
-
+	var sprites = [];
+	sprites['X'] = imgObstacle;
+	sprites['.'] = imgGround;
+	board = new Board(sprites);
+	board.Load();
+	
 	var bitmapPlayer1 = new createjs.Bitmap(imgPlayer1); // will become a sprite
 	player1 = new Player(bitmapPlayer1);
 	stage.addChild(player1.internalBitmap);
-
+	
 	createjs.Ticker.setFPS(60);
 	createjs.Ticker.addEventListener("tick", update);
 
