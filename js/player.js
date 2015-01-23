@@ -34,9 +34,11 @@ function Player(bitmap)
 			this.gridPosition.y +=1;
 		}
 
+		var spriteUnderPlayer = texturesPerBlock[this.gridPosition.y][this.gridPosition.x];
+		stage.removeChild(this.internalBitmap);
+		var index = stage.getChildIndex(spriteUnderPlayer);
+		stage.addChildAt(this.internalBitmap, index+1);
 		// draw new shape
 		//this.internalBitmap.draw();
-
 	}
-
 }

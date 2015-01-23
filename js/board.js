@@ -15,12 +15,15 @@ function Board(sprites)
 	"..............",
 	];
 
+	texturesPerBlock = [];
 	this.textures = sprites;
 
 	this.Load = function()
 	{
 		for(l in level)
 		{
+			texturesPerBlock.push([]);
+
 			line = level[l];
 			for(c in line)
 			{
@@ -30,6 +33,8 @@ function Board(sprites)
 				block.x = c*blockSize + gridInitX;
 				block.y = l*blockSize + gridInitY;
 				stage.addChild(block);
+
+				texturesPerBlock[l].push(block);
 			}
 		}
 	}
