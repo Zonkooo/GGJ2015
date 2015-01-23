@@ -3,13 +3,11 @@ var maxActionsToProgram = 3;
 
 function Player(bitmap)
 {
-	var self = this;
 	this.internalBitmap = bitmap;
 	this.internalBitmap.x = gridInitX;
 	this.internalBitmap.y = gridInitY;
 
 	this.gridPosition = {x:0, y:0};
-
 
 	this.programmedActions = [];
 	this.currentActionPlaying = 0;
@@ -58,6 +56,7 @@ function Player(bitmap)
 
 	}
 
+	this.prevState = [];
 
 	//	called at each tick of program Phase
 	this.updateProgramPhase = function()
@@ -65,22 +64,29 @@ function Player(bitmap)
 		// store actions
 		//if (this.programmedActions.length <= this.maxActionsToProgram)
 		//{
-			if(isKeyPressed[37]) // left
+			if(!this.prevState[37] && isKeyPressed[37]) // left
 			{
 				this.programmedActions.push(37);
 			}
-			if(isKeyPressed[39]) // right
+			this.prevState[37] = isKeyPressed[37];
+
+			if(!this.prevState[39] && isKeyPressed[39]) // right
 			{
 				this.programmedActions.push(39);
 			}
-			if(isKeyPressed[38]) // up
+			this.prevState[39] = isKeyPressed[39];
+
+			if(!this.prevState[38] && isKeyPressed[38]) // up
 			{
 				this.programmedActions.push(38);
 			}
-			if(isKeyPressed[40]) // down
+			this.prevState[38] = isKeyPressed[38];
+
+			if(!this.prevState[40] && isKeyPressed[40]) // down
 			{
 				this.programmedActions.push(40);
 			}
+			this.prevState[40] = isKeyPressed[40];
 		//}
 
 		console.log(this.programmedActions.length);
