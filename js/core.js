@@ -56,7 +56,7 @@ function launchGame()
 	board.Load();
 	
 	var bitmapPlayer1 = new createjs.Bitmap(imgPlayer1); // will become a sprite
-	player1 = new Player(bitmapPlayer1);
+	player1 = new Player(gridInitX, gridInitY, bitmapPlayer1);
 	stage.addChild(player1.internalBitmap);
 	
 	createjs.Ticker.setFPS(FPS);

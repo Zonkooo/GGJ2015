@@ -1,11 +1,11 @@
 var sizeOfTileInPixels = 75;
 var maxActionsToProgram = 3;
 
-function Player(bitmap)
+function Player(startx, starty, bitmap)
 {
 	this.internalBitmap = bitmap;
-	this.internalBitmap.x = gridInitX;
-	this.internalBitmap.y = gridInitY;
+	this.internalBitmap.x = startx;
+	this.internalBitmap.y = starty;
 
 	this.gridPosition = {x:0, y:0};
 
@@ -62,8 +62,8 @@ function Player(bitmap)
 	this.updateProgramPhase = function()
 	{
 		// store actions
-		//if (this.programmedActions.length <= this.maxActionsToProgram)
-		//{
+		if (this.programmedActions.length <= maxActionsToProgram)
+		{
 			if(!this.prevState[37] && isKeyPressed[37]) // left
 			{
 				this.programmedActions.push(37);
@@ -87,9 +87,6 @@ function Player(bitmap)
 				this.programmedActions.push(40);
 			}
 			this.prevState[40] = isKeyPressed[40];
-		//}
-
-		console.log(this.programmedActions.length);
-		console.log(this.currentActionPlaying);
+		}
 	}
 }
