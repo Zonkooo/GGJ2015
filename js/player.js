@@ -1,4 +1,5 @@
 var sizeOfTileInPixels = 75;
+var maxActionsToProgram = 3;
 
 function Player(bitmap)
 {
@@ -9,10 +10,14 @@ function Player(bitmap)
 
 	this.gridPosition = {x:0, y:0};
 
-	//called at each tick
-	this.updateState = function()
+
+	var programmedActions = [];
+	
+
+	//called at each tick of play phase
+	this.updatePlayPhase = function()
 	{
-		// update coordinates
+		// read programmed actions
 		if(isKeyPressed[37] && this.gridPosition.x > 0 && level[this.gridPosition.y][this.gridPosition.x-1] == '.') // left
 		{
 			this.internalBitmap.x -= sizeOfTileInPixels;
@@ -40,5 +45,31 @@ function Player(bitmap)
 		stage.addChildAt(this.internalBitmap, index+1);
 		// draw new shape
 		//this.internalBitmap.draw();
+	}
+
+
+	//	called at each tick of program Phase
+	this.updateProgramPhase = function()
+	{
+		// store actions
+		if (programmedActions.length <= maxActionsToProgram)
+		{
+			if(isKeyPressed[37]) // left
+			{
+				programmedActions.Push(37);
+			}
+			if(isKeyPressed[39]) // right
+			{
+				programmedActions.Push(39);
+			}
+			if(isKeyPressed[38]) // up
+			{
+				programmedActions.Push(38);
+			}
+			if(isKeyPressed[40]) // down
+			{
+				programmedActions.Push(40);
+			}
+		}
 	}
 }

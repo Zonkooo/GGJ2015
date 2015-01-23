@@ -10,6 +10,12 @@ var player1;
 
 var isKeyPressed = [];
 
+var FPS = 10;
+var frameBeforeAction = FPS * 5;
+var elapsedFrames = 0;
+var gameState = "programActions";
+
+
 function startGame()
 {
 	stage = new createjs.Stage(document.getElementById("gameCanvas"));
@@ -53,7 +59,7 @@ function launchGame()
 	player1 = new Player(bitmapPlayer1);
 	stage.addChild(player1.internalBitmap);
 	
-	createjs.Ticker.setFPS(60);
+	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
 
 
@@ -76,9 +82,22 @@ function code(e)
 
 function update(event)
 {
-	// Update players
-	player1.updateState();
+	if (gameState == "programActions")
+	{
+		elapsedFrames++;
+		if (elapsedFrames >= frameBeforeAction)
+		{
+			elapsedFrames = 0;
+			gameState = "playActions";
+		}
 
+		player1.updateProgramPhase();
+	}
+	else
+	{
+		// Update players
+		player1.updatePlayPhase();
+	}
 	// Update main scene
 	stage.update();
 }
