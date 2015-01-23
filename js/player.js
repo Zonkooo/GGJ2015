@@ -4,8 +4,8 @@ function Player(bitmap)
 {
 	var self = this;
 	this.internalBitmap = bitmap;
-	this.internalBitmap.x = 0;
-	this.internalBitmap.y = 0;
+	this.internalBitmap.x = gridInitX;
+	this.internalBitmap.y = gridInitY;
 
 	//called at each tick
 	this.updateState = function()

@@ -1,20 +1,18 @@
 function Board(sprites)
 {
-	gridInitX = 10;
-	gridInitY = 10;
+	gridInitX = 100;
+	gridInitY = 100;
 	blockSize = 75;
 	blockExtraHeight = 25;
 
 	this.level = [ // 14 x 7 squares
-	"XXXXXXXXXXXXXXXX",
-	"X..............X",
-	"X..............X",
-	"X..............X",
-	"X..............X",
-	"X..............X",
-	"X..............X",
-	"X..............X",
-	"XXXXXXXXXXXXXXXX",
+	"..............",
+	".X............",
+	"..X...X.XXX...",
+	"...X..X...X...",
+	"....XXX.X.X...",
+	"........X.X...",
+	"..............",
 	];
 
 	this.textures = sprites;
@@ -28,7 +26,7 @@ function Board(sprites)
 			{
 				char = line[c];
 				var block = new createjs.Bitmap(this.textures[char]);
-				block.regX = blockExtraHeight;
+				block.regY = blockExtraHeight;
 				block.x = c*blockSize + gridInitX;
 				block.y = l*blockSize + gridInitY;
 				stage.addChild(block);
