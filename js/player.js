@@ -41,24 +41,28 @@ function Player(bitmap, position, controls, gamepadId)
 				if(!this.prevState[this.controls.left] && isKeyPressed[this.controls.left]) // left
 				{
 					this.programmedActions.push(this.controls.left);
+					createjs.Sound.play(commandSetSound);
 				}
 				this.prevState[this.controls.left] = isKeyPressed[this.controls.left];
 
 				if(!this.prevState[this.controls.right] && isKeyPressed[this.controls.right]) // right
 				{
 					this.programmedActions.push(this.controls.right);
+					createjs.Sound.play(commandSetSound);
 				}
 				this.prevState[this.controls.right] = isKeyPressed[this.controls.right];
 
 				if(!this.prevState[this.controls.up] && isKeyPressed[this.controls.up]) // up
 				{
 					this.programmedActions.push(this.controls.up);
+					createjs.Sound.play(commandSetSound);
 				}
 				this.prevState[this.controls.up] = isKeyPressed[this.controls.up];
 
 				if(!this.prevState[this.controls.down] && isKeyPressed[this.controls.down]) // down
 				{
 					this.programmedActions.push(this.controls.down);
+					createjs.Sound.play(commandSetSound);
 				}
 				this.prevState[this.controls.down] = isKeyPressed[this.controls.down];
 			}

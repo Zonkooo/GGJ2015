@@ -8,6 +8,8 @@ var imgGround = new Image();
 var imgCommandSet = new Image();
 var imgCommandNotSet = new Image();
 
+var commandSetSound = "commandSet";
+
 var players = [];
 var player1;
 var player2;
@@ -16,7 +18,7 @@ var interfaceElement;
 
 var isKeyPressed = [];
 
-var FPS = 30;
+var FPS = 60;
 var secondsBeforeAction = 5;
 var frameBeforeAction = FPS * secondsBeforeAction;
 var elapsedFrames = 0;
@@ -54,6 +56,8 @@ function preloadAssets()
 
 	imgCommandNotSet.onload = preloadUpdate();
 	imgCommandNotSet.src = "media/commandNotSet.png";
+
+	createjs.Sound.registerSound("media/pika.wav", commandSetSound);
 }
 
 function preloadUpdate()
