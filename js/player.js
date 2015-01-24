@@ -8,6 +8,8 @@ DOWN = "down";
 
 function Player(bitmap, position, controls, gamepadId)
 {
+	var speed = 3;
+
 	this.internalBitmap = bitmap;
 	stage.addChild(bitmap);
 
@@ -21,19 +23,29 @@ function Player(bitmap, position, controls, gamepadId)
 	this.internalBitmap.y = gridInitY + position.y*blockSize;
 
 	this.programmedActions = [];
+	this.animDone = true;
+
 
 	this.controls = controls;
 
-	//called at each tick of play phase
+	//called at each tick of animation phase
 	this.updatePlayPhase = function()
 	{
-		this.internalBitmap.x = gridInitX + this.gridPosition.x*blockSize;
-		this.internalBitmap.y = gridInitY + this.gridPosition.y*blockSize;
+		if(!this.animDone)
+		{
+			var target = {x:gridInitX + this.gridPosition.x*blockSize, y:gridInitY + this.gridPosition.y*blockSize};
 
-		var spriteUnderPlayer = texturesPerBlock[this.gridPosition.y][this.gridPosition.x];
-		stage.removeChild(this.internalBitmap);
-		var index = stage.getChildIndex(spriteUnderPlayer);
-		stage.addChildAt(this.internalBitmap, index+1);
+			this.internalBitmap.x += Math.max(Math.min(target.x - this.internalBitmap.x, speed), -speed);
+			this.internalBitmap.y += Math.max(Math.min(target.y - this.internalBitmap.y, speed), -speed);
+
+			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
+				this.animDone = true;
+
+			var spriteUnderPlayer = texturesPerBlock[this.gridPosition.y][this.gridPosition.x];
+			stage.removeChild(this.internalBitmap);
+			var index = stage.getChildIndex(spriteUnderPlayer);
+			stage.addChildAt(this.internalBitmap, index+1);
+		}
 	}
 
 	this.prevState = [];

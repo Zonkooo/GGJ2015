@@ -154,20 +154,25 @@ function update(event)
 	}
 	else
 	{
-		GM.Update();
-
+		var allDone = true;
 		// Update players
 		for(p in players)
 		{
 			var player = players[p];
 			player.updatePlayPhase();
+			allDone &= player.animDone;
 		}
 
-		currentTurn++;
-		if(currentTurn >= maxActionsToProgram)
+		if(allDone)
 		{
-			gameState = "programActions";
-			currentTurn = 0;
+			GM.Update();
+
+			currentTurn++;
+			if(currentTurn >= maxActionsToProgram)
+			{
+				gameState = "programActions";
+				currentTurn = 0;
+			}
 		}
 	}
 

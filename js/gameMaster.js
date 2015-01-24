@@ -109,6 +109,7 @@ function GameMaster(players)
 					continue;
 				player.gridPosition.x = +x;
 				player.gridPosition.y = +y;
+				player.animDone = false;
 			}
 	}
 }
