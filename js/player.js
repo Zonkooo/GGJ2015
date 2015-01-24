@@ -40,28 +40,25 @@ function Player(bitmap, position, controls, gamepadId)
 	//called at each tick of animation phase
 	this.updatePlayPhase = function()
 	{
-		if (this.aliveState == "alive")
+		if(!this.animDone)
 		{
-			if(!this.animDone)
-			{
-				var target = {x:gridInitX + this.gridPosition.x*blockSize, y:gridInitY + this.gridPosition.y*blockSize};
+			var target = {x:gridInitX + this.gridPosition.x*blockSize, y:gridInitY + this.gridPosition.y*blockSize};
 
-				this.internalBitmap.x += Math.max(Math.min(target.x - this.internalBitmap.x, speed), -speed);
-				this.internalBitmap.y += Math.max(Math.min(target.y - this.internalBitmap.y, speed), -speed);
+			this.internalBitmap.x += Math.max(Math.min(target.x - this.internalBitmap.x, speed), -speed);
+			this.internalBitmap.y += Math.max(Math.min(target.y - this.internalBitmap.y, speed), -speed);
 
-				if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
+			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
 			{
-					this.animDone = true;
+				this.animDone = true;
 				this.internalBitmap.gotoAndPlay("idle" + (this.internalBitmap.currentAnimation))
 			}
 
-				var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;
-				var dy = target.y - this.internalBitmap.y < 0 ? 1 : 0;
-				var redrawJustBefore = texturesPerBlock[this.gridPosition.y + dy][this.gridPosition.x + dx];
-				stage.removeChild(this.internalBitmap);
-				var index = stage.getChildIndex(redrawJustBefore);
-				stage.addChildAt(this.internalBitmap, index+1);
-			}
+			var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;
+			var dy = target.y - this.internalBitmap.y < 0 ? 1 : 0;
+			var redrawJustBefore = texturesPerBlock[this.gridPosition.y + dy][this.gridPosition.x + dx];
+			stage.removeChild(this.internalBitmap);
+			var index = stage.getChildIndex(redrawJustBefore);
+			stage.addChildAt(this.internalBitmap, index+1);
 		}
 	}
 

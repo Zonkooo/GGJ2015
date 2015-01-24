@@ -70,34 +70,7 @@ function GameMaster(players)
 			playersWantedAttacks.push({x:wantedAttackX, y:wantedAttackY});
 		}
 
-		// STEP 2 : attacks
-		for(p in this.players)
-		{
-			var currentPlayer = this.players[p];
-			if (playersWantedAttacks[currentPlayer.gamepadId].x != -1) // that player has an attack to do
-			{
-				//Display attack
-				currentPlayer.attackBitmap.x = gridInitX + blockSize * playersWantedAttacks[currentPlayer.gamepadId].x;
-				currentPlayer.attackBitmap.y = gridInitY + blockSize * playersWantedAttacks[currentPlayer.gamepadId].y;
-
-				//Check if someone was killed
-				for(o in this.players)
-				{
-					var otherPlayer = this.players[o];
-					if (playersWantedAttacks[currentPlayer.gamepadId].x == playersWantedPositions[otherPlayer.gamepadId].x
-						&&  playersWantedAttacks[currentPlayer.gamepadId].y ==playersWantedPositions[otherPlayer.gamepadId].y)
-					{
-						// we caught another player with the attack
-						// TODO : deal with counters.
-						otherPlayer.aliveState = "dead";
-						stage.removeChild(otherPlayer.internalBitmap);
-					}
-
-				}
-			}
-		}
-
-		// STEP 3 : collisions
+		// STEP 2 : collisions
 		var collisionsDone = [];
 		for(p in this.players)
 		{
@@ -147,6 +120,37 @@ function GameMaster(players)
 				collisionsDone.push(playerCollidedWith);
 			}
 			collisionsDone.push(currentPlayer);
+		}
+
+		// STEP 3 : attacks
+		for(p in this.players)
+		{
+			var currentPlayer = this.players[p];
+			if (playersWantedAttacks[currentPlayer.gamepadId].x != -1) // that player has an attack to do
+			{
+				//Display attack
+				currentPlayer.attackBitmap.x = gridInitX + blockSize * playersWantedAttacks[currentPlayer.gamepadId].x;
+				currentPlayer.attackBitmap.y = gridInitY + blockSize * playersWantedAttacks[currentPlayer.gamepadId].y;
+
+				//Check if someone was killed
+				for(o in this.players)
+				{
+					var otherPlayer = this.players[o];
+					if (currentPlayer == otherPlayer) // dont check collision with yourseld
+						continue;
+					if (playersWantedAttacks[currentPlayer.gamepadId].x == playersWantedPositions[otherPlayer.gamepadId].x
+						&&  playersWantedAttacks[currentPlayer.gamepadId].y ==playersWantedPositions[otherPlayer.gamepadId].y)
+					{
+						// we caught another player with the attack
+						// TODO : deal with counters.
+
+
+						otherPlayer.aliveState = "dead";
+						otherPlayer.internalBitmap.visible = false;
+					}
+
+				}
+			}
 		}
 
 		// STEP 4 : move update coordinates inside player
