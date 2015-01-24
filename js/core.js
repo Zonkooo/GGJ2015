@@ -108,22 +108,27 @@ function launchGame()
 			frames: {height: 225, width: 225, regX: 75, regY: 75},
 			animations: {
 				down: [0, 3, "down", 0.1],
-				up: [4, 7, "up", 0.1],
-				right: [8, 11, "right", 0.1],
-				left: [12, 15, "left", 0.1],
+				up: [8, 11, "up", 0.1],
+				right: [16, 19, "right", 0.1],
+				left: [24, 27, "left", 0.1],
+
+				idledown: [4, 5, "idledown", 0.1],
+				idleup: [12, 13, "idleup", 0.1],
+				idleright: [20, 21, "idleright", 0.1],
+				idleleft: [28, 29, "idleleft", 0.1],
 			}
 		});
 
-	var spriteP1 = new createjs.Sprite(playerSheet, "right");
+	var spriteP1 = new createjs.Sprite(playerSheet, "idleright");
 	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, 0));
 
-	var spriteP2 = new createjs.Sprite(playerSheet, "left");
+	var spriteP2 = new createjs.Sprite(playerSheet, "idleleft");
 	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, 1));
 
-	var spriteP3 = new createjs.Sprite(playerSheet, "right");
+	var spriteP3 = new createjs.Sprite(playerSheet, "idleright");
 	players.push(new Player(spriteP3, {x:0, y:6}, {up:79, down:76, left:75, right:77}, 2));
 
-	var spriteP4 = new createjs.Sprite(playerSheet, "left");
+	var spriteP4 = new createjs.Sprite(playerSheet, "idleleft");
 	players.push(new Player(spriteP4, {x:13, y:6}, {up:84, down:71, left:70, right:72}, 3));
 
 	GM = new GameMaster(players);

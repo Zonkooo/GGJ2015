@@ -14,6 +14,8 @@ function GameMaster(players)
 		for(p in this.players)
 		{
 			var player = this.players[p];
+			player.animDone = false;
+
 			var wantedX = player.gridPosition.x;
 			var wantedY = player.gridPosition.y;
 
@@ -81,7 +83,7 @@ function GameMaster(players)
 					console.log("collision between " + p + " and " + o);
 					playerCollidedWith = otherPlayer;
 					break;
-				}			
+				}
 			}
 
 
@@ -107,7 +109,6 @@ function GameMaster(players)
 					continue;
 				player.gridPosition.x = +x;
 				player.gridPosition.y = +y;
-				player.animDone = false;
 			}
 	}
 }

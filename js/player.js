@@ -39,7 +39,10 @@ function Player(bitmap, position, controls, gamepadId)
 			this.internalBitmap.y += Math.max(Math.min(target.y - this.internalBitmap.y, speed), -speed);
 
 			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
+			{
 				this.animDone = true;
+				this.internalBitmap.gotoAndPlay("idle" + (this.internalBitmap.currentAnimation))
+			}
 
 			var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;
 			var dy = target.y - this.internalBitmap.y < 0 ? 1 : 0;
