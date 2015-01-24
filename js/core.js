@@ -1,14 +1,16 @@
 var preloadCount = 0;
-var preloadTotal = 3;
+var preloadTotal = 4;
 
 var stage;
 var imgPlayer1 = new Image();
 var imgObstacle = new Image();
 var imgGround = new Image();
+var imgCommandSet = new Image();
 
 var player1;
 var player2;
 var GM;
+var interfaceElement;
 
 var isKeyPressed = [];
 
@@ -43,6 +45,9 @@ function preloadAssets()
 
 	imgGround.onload = preloadUpdate();
 	imgGround.src = "media/ground.png";
+
+	imgCommandSet.onload = preloadUpdate();
+	imgCommandSet.src = "media/imgCommandSet.png";
 }
 
 function preloadUpdate()
@@ -72,9 +77,11 @@ function launchGame()
 
 	GM = new GameMaster([player1, player2]);
 
+	var bitmapCommandSet = new createjs.Bitmap(imgCommandSet);
+	interfaceElement = new Interface(bitmapCommandSet);
+
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
-
 
 	//manage keyboard state
 	document.onkeydown = function(e){
@@ -95,6 +102,7 @@ function code(e)
 
 function update(event)
 {
+	// update charachters
 	if (gameState == "programActions")
 	{
 		elapsedFrames++;
@@ -127,6 +135,10 @@ function update(event)
 			currentTurn = 0;
 		}
 	}
+
+	//update interface
+	interfaceElement.updateState();
+
 	// Update main scene
 	stage.update();
 }
