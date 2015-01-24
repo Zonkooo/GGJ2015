@@ -41,7 +41,7 @@ function startGame()
 function preloadAssets()
 {
 	imgPlayer1.onload = preloadUpdate();
-	imgPlayer1.src = "media/pacman.png";
+	imgPlayer1.src = "media/gozilla_spritesheet.png";
 
 	for(i = 1; i <= 6; i++)
 	{
@@ -105,11 +105,11 @@ function launchGame()
 
 	var playerSheet = new createjs.SpriteSheet({
 			images: [imgPlayer1],
-			frames: {height: 75, width: 75},
+			frames: {height: 100, width: 75, regY: 25},
 			animations: {
-				right: [0, 0],
-				down: [1, 1],
-				up: [2, 2],
+				down: [0, 0],
+				up: [1, 1],
+				right: [2, 2],
 				left: [3, 3],
 			}
 		});
