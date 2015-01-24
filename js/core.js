@@ -170,6 +170,8 @@ function update(event)
 			for(p in players)
 			{
 				var player = players[p];
+				if(player.programmedActions.length > 0)
+					console.log(p + " at " + player.gridPosition.x + "," + player.gridPosition.y + " does " + player.programmedActions);
 				player.programmedActions.reverse();
 			}
 		}
