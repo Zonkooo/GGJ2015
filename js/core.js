@@ -213,7 +213,6 @@ function update(event)
 	}
 	else
 	{
-		// TODO : if 3 chars are dead, reset the game
 		var allDone = true;
 		// Update players
 		for(p in players)
@@ -244,6 +243,9 @@ function update(event)
 			}
 		}
 	}
+
+	// if 3 players dead, reset the game
+
 
 	//update interface
 	interfaceElement.updateState();

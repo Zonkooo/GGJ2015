@@ -1,3 +1,5 @@
+
+
 function Interface()
 {
 	var timer = new createjs.Text("pouet", "50px Courier", "#000000");
@@ -70,7 +72,15 @@ function Interface()
 		}
 
 		// update timer
-		timer.text = ((frameBeforeAction - elapsedFrames) / FPS).toFixed(2);
+		var remaining = ((frameBeforeAction - elapsedFrames) / FPS).toFixed(2);
+		if (remaining == "5.00")
+		{
+			timer.text = "GO !";
+		}
+		else
+		{
+			timer.text = remaining;
+		}
 
 	}
 }

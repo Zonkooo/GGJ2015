@@ -137,20 +137,20 @@ function GameMaster(players)
 				for(o in this.players)
 				{
 					var otherPlayer = this.players[o];
-					if (currentPlayer == otherPlayer) // dont check collision with yourseld
+					if (currentPlayer == otherPlayer) // dont check collision with yourself
 						continue;
 					if (playersWantedAttacks[currentPlayer.gamepadId].x == playersWantedPositions[otherPlayer.gamepadId].x
 						&&  playersWantedAttacks[currentPlayer.gamepadId].y ==playersWantedPositions[otherPlayer.gamepadId].y)
 					{
 						// we caught another player with the attack
-						// Check if he counters
+						// Check if he counters...
 						if (playersWantedAttacks[otherPlayer.gamepadId].x != -1
 							&& playersWantedAttacks[otherPlayer.gamepadId].x == playersWantedPositions[currentPlayer.gamepadId].x
 						&&  playersWantedAttacks[otherPlayer.gamepadId].y ==playersWantedPositions[currentPlayer.gamepadId].y)
 						{
 							console.log("counter !");
 						}
-						else // he dies
+						else // or else he dies
 						{
 							otherPlayer.aliveState = "dead";
 							otherPlayer.internalBitmap.visible = false;
