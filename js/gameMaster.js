@@ -131,6 +131,7 @@ function GameMaster(players)
 				//Display attack
 				currentPlayer.attackBitmap.x = gridInitX + blockSize * playersWantedAttacks[currentPlayer.gamepadId].x;
 				currentPlayer.attackBitmap.y = gridInitY + blockSize * playersWantedAttacks[currentPlayer.gamepadId].y;
+				currentPlayer.attackBitmap.visible = true;
 
 				//Check if someone was killed
 				for(o in this.players)
@@ -142,13 +143,21 @@ function GameMaster(players)
 						&&  playersWantedAttacks[currentPlayer.gamepadId].y ==playersWantedPositions[otherPlayer.gamepadId].y)
 					{
 						// we caught another player with the attack
-						// TODO : deal with counters.
-
-
-						otherPlayer.aliveState = "dead";
-						stage.removeChild(otherPlayer.internalBitmap);
+						// Check if he counters
+						if (playersWantedAttacks[otherPlayer.gamepadId].x != -1
+							&& playersWantedAttacks[otherPlayer.gamepadId].x == playersWantedPositions[currentPlayer.gamepadId].x
+						&&  playersWantedAttacks[otherPlayer.gamepadId].y ==playersWantedPositions[currentPlayer.gamepadId].y)
+						{
+							console.log("counter !");
+						}
+						else // he dies
+						{
+							// TODO : proper remove (no actions possible)
+							otherPlayer.aliveState = "dead";
+							otherPlayer.internalBitmap.visible = false;
+							stage.removeChild(otherPlayer.internalBitmap);
+						}
 					}
-
 				}
 			}
 		}

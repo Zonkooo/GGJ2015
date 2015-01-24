@@ -214,6 +214,15 @@ function update(event)
 			{
 				gameState = "programActions";
 				currentTurn = 0;
+
+				// TODO : this should be done properly
+				for(p in players)
+				{
+					var player = players[p];
+					player.attackBitmap.visible = false;
+				}
+
+
 			}
 		}
 	}
