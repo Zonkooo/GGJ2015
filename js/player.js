@@ -4,6 +4,7 @@ function Player(bitmap, position, controls)
 {
 	this.internalBitmap = bitmap;
 
+
 	this.gridPosition = position;
 
 	this.internalBitmap.x = gridInitX + position.x*blockSize;
