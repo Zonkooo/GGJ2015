@@ -52,7 +52,7 @@ function preloadAssets()
 	}
 
 	imgGround.onload = preloadUpdate();
-	imgGround.src = "media/ground.png";
+	imgGround.src = "media/env/road_cross.png";
 
 	imgCommandSet.onload = preloadUpdate();
 	imgCommandSet.src = "media/commandSet.png";
