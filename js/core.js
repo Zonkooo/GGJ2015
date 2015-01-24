@@ -60,7 +60,7 @@ function preloadAssets()
 	imgCommandNotSet.onload = preloadUpdate();
 	imgCommandNotSet.src = "media/commandNotSet.png";
 
-	createjs.Sound.registerSound("media/pika.wav", commandSetSound);
+	createjs.Sound.registerSound("media/pika.wav", commandSetSound, maxActionsToProgram);
 }
 
 function preloadUpdate()
