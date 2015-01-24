@@ -11,8 +11,6 @@ var imgCommandNotSet = new Image();
 var commandSetSound = "commandSet";
 
 var players = [];
-var player1;
-var player2;
 var GM;
 var interfaceElement;
 
@@ -78,12 +76,12 @@ function launchGame()
 	board.Load();
 
 	var bitmapPlayer1 = new createjs.Bitmap(imgPlayer1); // will become a sprite
-	player1 = new Player(bitmapPlayer1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, 0);
+	var player1 = new Player(bitmapPlayer1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, 0);
 	stage.addChild(player1.internalBitmap);
 	players.push(player1);
 
 	var bitmapPlayer2 = new createjs.Bitmap(imgPlayer1); // will become a sprite
-	player2 = new Player(bitmapPlayer2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, 1);
+	var player2 = new Player(bitmapPlayer2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, 1);
 	stage.addChild(player2.internalBitmap);
 	players.push(player2);
 
@@ -117,17 +115,22 @@ function update(event)
 	if (gameState == "programActions")
 	{
 		elapsedFrames++;
-		player1.updateProgramPhase();
-		player2.updateProgramPhase();
-
+		for(p in players)
+		{
+			var player = players[p];
+			player.updateProgramPhase();
+		}
 
 		if (elapsedFrames >= frameBeforeAction)
 		{
 			elapsedFrames = 0;
 			gameState = "playActions";
 
-			player1.programmedActions.reverse();
-			player2.programmedActions.reverse();
+			for(p in players)
+			{
+				var player = players[p];
+				player.programmedActions.reverse();
+			}
 		}
 
 	}
@@ -136,8 +139,11 @@ function update(event)
 		GM.Update();
 
 		// Update players
-		player1.updatePlayPhase();
-		player2.updatePlayPhase();
+		for(p in players)
+		{
+			var player = players[p];
+			player.updatePlayPhase();
+		}
 
 		currentTurn++;
 		if(currentTurn >= maxActionsToProgram)
