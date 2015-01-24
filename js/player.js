@@ -9,6 +9,8 @@ DOWN = "down";
 function Player(bitmap, position, controls, gamepadId)
 {
 	this.internalBitmap = bitmap;
+	stage.addChild(bitmap);
+
 	this.gamepadId = gamepadId;
 
 	this.gridPosition = position;

@@ -90,20 +90,23 @@ function launchGame()
 				left: [3, 3],
 			}
 		});
+
 	var spriteP1 = new createjs.Sprite(playerSheet, "right");
-	var player1 = new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, 0);
-	stage.addChild(player1.internalBitmap);
-	players.push(player1);
+	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, 0));
 
 	var spriteP2 = new createjs.Sprite(playerSheet, "left");
-	var player2 = new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, 1);
-	stage.addChild(player2.internalBitmap);
-	players.push(player2);
+	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, 1));
 
-	GM = new GameMaster([player1, player2]);
+	var spriteP3 = new createjs.Sprite(playerSheet, "right");
+	players.push(new Player(spriteP3, {x:0, y:6}, {up:79, down:76, left:75, right:77}, 2));
+
+	var spriteP4 = new createjs.Sprite(playerSheet, "left");
+	players.push(new Player(spriteP4, {x:13, y:6}, {up:84, down:71, left:70, right:72}, 3));
+
+	GM = new GameMaster(players);
 	interfaceElement = new Interface();
 	interfaceElement.load();
-	
+
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
 
@@ -203,12 +206,12 @@ function startPolling()
   }
 
 function gamepadtick()
-{	
+{
 	pollStatus();
 	scheduleNextTick();
 }
 
-function scheduleNextTick() 
+function scheduleNextTick()
 {
 // Only schedule the next frame if we haven’t decided to stop via
 // stopPolling() before.
@@ -225,7 +228,7 @@ function scheduleNextTick()
 	  // Gamepad API are already supporting requestAnimationFrame().
 	}
 }
-function pollStatus() 
+function pollStatus()
 {
 pollGamepads();
 
