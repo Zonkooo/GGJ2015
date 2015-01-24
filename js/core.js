@@ -1,12 +1,14 @@
 var preloadCount = 0;
-var preloadTotal = 4;
+var preloadTotal = 5;
 
 var stage;
 var imgPlayer1 = new Image();
 var imgObstacle = new Image();
 var imgGround = new Image();
 var imgCommandSet = new Image();
+var imgCommandNotSet = new Image();
 
+var players = [];
 var player1;
 var player2;
 var GM;
@@ -47,7 +49,10 @@ function preloadAssets()
 	imgGround.src = "media/ground.png";
 
 	imgCommandSet.onload = preloadUpdate();
-	imgCommandSet.src = "media/imgCommandSet.png";
+	imgCommandSet.src = "media/commandSet.png";
+
+	imgCommandNotSet.onload = preloadUpdate();
+	imgCommandNotSet.src = "media/commandNotSet.png";
 }
 
 function preloadUpdate()
@@ -70,15 +75,16 @@ function launchGame()
 	var bitmapPlayer1 = new createjs.Bitmap(imgPlayer1); // will become a sprite
 	player1 = new Player(bitmapPlayer1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, -1);
 	stage.addChild(player1.internalBitmap);
+	players.push(player1);
 
 	var bitmapPlayer2 = new createjs.Bitmap(imgPlayer1); // will become a sprite
 	player2 = new Player(bitmapPlayer2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, -1);
 	stage.addChild(player2.internalBitmap);
+	players.push(player2);
 
 	GM = new GameMaster([player1, player2]);
+	interfaceElement = new Interface();
 
-	var bitmapCommandSet = new createjs.Bitmap(imgCommandSet);
-	interfaceElement = new Interface(bitmapCommandSet);
 
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
