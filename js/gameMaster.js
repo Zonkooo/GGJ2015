@@ -45,42 +45,55 @@ function GameMaster(players)
 		}
 
 		// STEP 2 : collisions
-		var collisionsDoneForPlayer = [];
+		// TODO : mecanism to avoid recomputing twice
+		var collisionsDone = [];
 		for(p in this.players)
 		{
 			var currentPlayer = this.players[p];
-			if (collisionsDoneForPlayer[currentPlayer] == true)
+			if (collisionsDone.indexOf(currentPlayer) != -1)
 			{
-				// no need to check collisions for this one...
+				console.log("skipped one tile");
 				continue;
 			}
-
+			var collided = false;
+			var playerCollidedWith;
 			for(o in this.players)
 			{
 				var otherPlayer = this.players[o];
 				if (currentPlayer == otherPlayer) // dont check collision with yourseld
 					continue;
 				// check for a clash when players are on neighboor tiles and move into each other :  .....xx......
-				if (playersWantedPositions[currentPlayer.gamepadId] == playersCurrentPositions[otherPlayer.gamepadId] 
-					&& playersWantedPositions[otherPlayer.gamepadId] == playersCurrentPositions[currentPlayer.gamepadId])
+				if (playersWantedPositions[currentPlayer.gamepadId].x == playersCurrentPositions[otherPlayer.gamepadId].x
+					&& playersWantedPositions[currentPlayer.gamepadId].y == playersCurrentPositions[otherPlayer.gamepadId].y
+					&& playersWantedPositions[otherPlayer.gamepadId].x == playersCurrentPositions[currentPlayer.gamepadId].x
+					&& playersWantedPositions[otherPlayer.gamepadId].y == playersCurrentPositions[currentPlayer.gamepadId].y)
 				{
-					playersPositions[playersWantedPositions[currentPlayer.gamepadId].y][playersWantedPositions[currentPlayer.gamepadId].x] = undefined;
-					collisionsDoneForPlayer[currentPlayer] = true;
-					collisionsDoneForPlayer[otherPlayer] = true;
+					collided = true;
+					playerCollidedWith = otherPlayer;
+					break;
 				}
 				// check for a clash when players are separated by one tile and move into each other :  .....x.x.....
-				else if (playersWantedPositions[currentPlayer.gamepadId] == playersWantedPositions[otherPlayer.gamepadId])
+				else if (playersWantedPositions[currentPlayer.gamepadId].x == playersWantedPositions[otherPlayer.gamepadId].x
+					&& playersWantedPositions[currentPlayer.gamepadId].y == playersWantedPositions[otherPlayer.gamepadId].y)
 				{
-					playersPositions[wantedY][wantedX] = undefined;
-					collisionsDoneForPlayer[currentPlayer] = true;
-					collisionsDoneForPlayer[otherPlayer] = true;
-				}
-				// valid move !
-				else 
-				{
-					playersPositions[playersWantedPositions[currentPlayer.gamepadId].y][playersWantedPositions[currentPlayer.gamepadId].x] = currentPlayer;
-				}
+					collided = true;
+					playerCollidedWith = otherPlayer;
+					break;
+				}			
 			}
+
+
+			if (collided == false) // valid move
+			{
+				playersPositions[playersWantedPositions[currentPlayer.gamepadId].y][playersWantedPositions[currentPlayer.gamepadId].x] = currentPlayer;
+			}
+			else // cant move : you and the other stay in place
+			{
+				playersPositions[playersCurrentPositions[currentPlayer.gamepadId].y][playersCurrentPositions[currentPlayer.gamepadId].x] = currentPlayer;
+				playersPositions[playersCurrentPositions[playerCollidedWith.gamepadId].y][playersCurrentPositions[playerCollidedWith.gamepadId].x] = playerCollidedWith;
+				collisionsDone.push(playerCollidedWith);
+			}
+			collisionsDone.push(currentPlayer);
 		}
 
 		// STEP 4 : move update coordinates inside player
