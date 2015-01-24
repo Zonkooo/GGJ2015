@@ -13,21 +13,26 @@ function GameMaster(players)
 			var wantedY = player.gridPosition.y;
 
 			var action = player.programmedActions.pop();
-			if(action == LEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] == '.') // left
+			if(action)
 			{
-				wantedX--;
-			}
-			else if(action == RIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] == '.') // right
-			{
-				wantedX++;
-			}
-			else if(action == UP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] == '.') // up
-			{
-				wantedY--;
-			}
-			else if(action == DOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] == '.') // down
-			{
-				wantedY++;
+				if(action == LEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] == '.') // left
+				{
+					wantedX--;
+				}
+				else if(action == RIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] == '.') // right
+				{
+					wantedX++;
+				}
+				else if(action == UP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] == '.') // up
+				{
+					wantedY--;
+				}
+				else if(action == DOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] == '.') // down
+				{
+					wantedY++;
+				}
+
+				player.internalBitmap.gotoAndPlay(action);
 			}
 
 			if(!playersPositions[wantedY][wantedX])
