@@ -1,4 +1,4 @@
-maxActionsToProgram = 3;
+maxActionsToProgram = 5;
 var controlsPad = {up:12, down:13, left:14, right:15};
 
 LEFT = "left";
