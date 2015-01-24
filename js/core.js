@@ -7,6 +7,8 @@ var imgObstacle = new Image();
 var imgGround = new Image();
 
 var player1;
+var player2;
+var GM;
 
 var isKeyPressed = [];
 
@@ -64,6 +66,8 @@ function launchGame()
 	player2 = new Player(bitmapPlayer2, {x:13, y:0}, {up:90, down:83, left:81, right:68});
 	stage.addChild(player2.internalBitmap);
 
+	GM = new GameMaster([player1, player2]);
+
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
 
@@ -98,14 +102,19 @@ function update(event)
 		{
 			elapsedFrames = 0;
 			gameState = "playActions";
+
+			player1.programmedActions.reverse();
+			player2.programmedActions.reverse();
 		}
 
 	}
 	else
 	{
+		GM.Update();
+
 		// Update players
-		player1.updatePlayPhase(currentTurn);
-		player2.updatePlayPhase(currentTurn);
+		player1.updatePlayPhase();
+		player2.updatePlayPhase();
 
 		currentTurn++;
 		if(currentTurn >= maxActionsToProgram)

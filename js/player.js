@@ -14,36 +14,10 @@ function Player(bitmap, position, controls)
 	this.controls = controls;
 
 	//called at each tick of play phase
-	this.updatePlayPhase = function(turn)
+	this.updatePlayPhase = function()
 	{
-		//TODO : deal with incomplete inputs (not all actions have been programed)
-		//TODO : solve turn first and then dislay
-		// read programmed actions.
-		if(this.programmedActions[turn] == this.controls.left && this.gridPosition.x > 0 && level[this.gridPosition.y][this.gridPosition.x-1] == '.') // left
-		{
-			this.internalBitmap.x -= blockSize;
-			this.gridPosition.x -=1;
-		}
-		if(this.programmedActions[turn] == this.controls.right && this.gridPosition.x < level[0].length-1 && level[this.gridPosition.y][this.gridPosition.x+1] == '.') // right
-		{
-			this.internalBitmap.x += blockSize;
-			this.gridPosition.x +=1;
-		}
-		if(this.programmedActions[turn] == this.controls.up && this.gridPosition.y > 0 && level[this.gridPosition.y-1][this.gridPosition.x] == '.') // up
-		{
-			this.internalBitmap.y -= blockSize;
-			this.gridPosition.y -=1;
-		}
-		if(this.programmedActions[turn] == this.controls.down && this.gridPosition.y < level.length-1 && level[this.gridPosition.y+1][this.gridPosition.x] == '.') // down
-		{
-			this.internalBitmap.y += blockSize;
-			this.gridPosition.y +=1;
-		}
-
-		if (turn == maxActionsToProgram-1) // All actions have been solved. Switch back to programation phase
-		{
-			this.programmedActions = [];
-		}
+		this.internalBitmap.x = gridInitX + this.gridPosition.x*blockSize;
+		this.internalBitmap.y = gridInitY + this.gridPosition.y*blockSize;
 
 		var spriteUnderPlayer = texturesPerBlock[this.gridPosition.y][this.gridPosition.x];
 		stage.removeChild(this.internalBitmap);
