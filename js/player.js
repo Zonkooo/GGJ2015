@@ -102,7 +102,7 @@ function Player(bitmap, position, controls, gamepadId)
 
 	this.CheckOneAction = function(source, outcome)
 	{
-		if (this.aliveState == "alive") // dead players cant' queue actions
+		if (this.aliveState == "alive") // dead players cannot queue actions
 		{
 			if((!this.prevState[source] && isKeyPressed[source]) || (!this.prevGamePadState[source] && this.gamePadState[source]))
 			{

@@ -75,7 +75,7 @@ function GameMaster(players)
 		for(p in this.players)
 		{
 			var currentPlayer = this.players[p];
-			if (collisionsDone.indexOf(currentPlayer) != -1)
+			if (collisionsDone.indexOf(currentPlayer) != -1 || currentPlayer.aliveState == "dead")
 			{
 				continue;
 			}
@@ -84,7 +84,7 @@ function GameMaster(players)
 			for(o in this.players)
 			{
 				var otherPlayer = this.players[o];
-				if (currentPlayer == otherPlayer) // dont check collision with yourseld
+				if (currentPlayer == otherPlayer || otherPlayer.aliveState == "dead") // dont check collision with yourseld
 					continue;
 				// check for a clash when players are on neighboor tiles and move into each other :  .....xx......
 				if (playersWantedPositions[currentPlayer.gamepadId].x == playersCurrentPositions[otherPlayer.gamepadId].x

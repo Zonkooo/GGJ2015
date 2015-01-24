@@ -235,6 +235,7 @@ function update(event)
 				gameState = "programActions";
 				currentTurn = 0;
 
+				// Set all players attack to invisible for prog phase
 				// TODO : this should be done properly
 				for(p in players)
 				{
@@ -248,7 +249,18 @@ function update(event)
 	}
 
 	// if 3 players dead, reset the game
-
+	var nbdead = 0;
+	for(p in players)
+	{
+		var player = players[p];
+		if (player.aliveStatus == "dead")
+		{
+			nbdead++;
+		}
+	}
+	if (nbdead >= 3) {
+		resetGame();
+	}
 
 	//update interface
 	interfaceElement.updateState();
@@ -259,7 +271,8 @@ function update(event)
 
 function resetGame()
 {
-	// TODO
+	// clear everything, relaunch the game (on a new stage ?)
+	//TODO
 }
 
 
