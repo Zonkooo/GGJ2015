@@ -1,9 +1,13 @@
 function Interface()
 {
+	var timer = new createjs.Text("Starting...", "50px Courier", "#ff0000");
+ 	timer.x = 600;
+ 	timer.y = 20;
+ 	stage.addChild(timer);
 
 	this.updateState = function()
 	{
-		// player 1
+		// update players action
 		var playerIndex;
 		for (playerIndex = 0; playerIndex < players.length ; ++playerIndex)
 		{
@@ -22,6 +26,9 @@ function Interface()
 				stage.addChild(interfaceElement);
 			}
 		}
+
+		// update timer
+		timer.text = Math.round((frameBeforeAction - elapsedFrames) / 60 * 100) /100;
 
 	}
 }

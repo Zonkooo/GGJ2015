@@ -16,8 +16,9 @@ var interfaceElement;
 
 var isKeyPressed = [];
 
-var FPS = 60;
-var frameBeforeAction = FPS * 5;
+var FPS = 30;
+var secondsBeforeAction = 5;
+var frameBeforeAction = FPS * secondsBeforeAction;
 var elapsedFrames = 0;
 var currentTurn = 0;
 var gameState = "programActions";
@@ -84,8 +85,7 @@ function launchGame()
 
 	GM = new GameMaster([player1, player2]);
 	interfaceElement = new Interface();
-
-
+	
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
 
