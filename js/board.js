@@ -28,7 +28,8 @@ function Board(sprites)
 			for(c in line)
 			{
 				char = line[c];
-				var block = new createjs.Bitmap(this.textures[char]);
+				var candidates = this.textures[char];
+				var block = new createjs.Bitmap(candidates[Math.floor(Math.random() * candidates.length)]);
 				block.regY = blockExtraHeight;
 				block.x = c*blockSize + gridInitX;
 				block.y = l*blockSize + gridInitY;

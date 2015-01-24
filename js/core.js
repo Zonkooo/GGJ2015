@@ -3,7 +3,7 @@ var preloadTotal = 5;
 
 var stage;
 var imgPlayer1 = new Image();
-var imgObstacle = new Image();
+var imgObstacles = [];
 var imgGround = new Image();
 var imgCommandSet = new Image();
 var imgCommandNotSet = new Image();
@@ -43,8 +43,13 @@ function preloadAssets()
 	imgPlayer1.onload = preloadUpdate();
 	imgPlayer1.src = "media/pacman.png";
 
-	imgObstacle.onload = preloadUpdate();
-	imgObstacle.src = "media/obstacle.png";
+	for(i = 1; i <= 6; i++)
+	{
+		var obstacles = new Image();
+		obstacles.onload = preloadUpdate();
+		obstacles.src = "media/env/bdg" + i + ".png";
+		imgObstacles.push(obstacles);
+	}
 
 	imgGround.onload = preloadUpdate();
 	imgGround.src = "media/ground.png";
@@ -70,8 +75,8 @@ function launchGame()
 	initGamepad();
 
 	var sprites = [];
-	sprites['X'] = imgObstacle;
-	sprites['.'] = imgGround;
+	sprites['X'] = imgObstacles;
+	sprites['.'] = [imgGround];
 	board = new Board(sprites);
 	board.Load();
 
