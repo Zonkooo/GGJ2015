@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 13;
+var preloadTotal = 14;
 
 var stage;
 var imgPlayers = [];
@@ -7,6 +7,7 @@ var imgObstacles = [];
 var imgGround = new Image();
 var imgCommandSet = new Image();
 var imgCommandNotSet = new Image();
+var imgFireball = new Image();
 
 var commandSetSound = "commandSet";
 
@@ -64,8 +65,12 @@ function preloadAssets()
 
 	imgCommandNotSet.onload = preloadUpdate();
 	imgCommandNotSet.src = "media/commandNotSet.png";
-
+	
+	imgFireball.onload = preloadUpdate();
+	imgFireball.src = "media/fireball.png";
 	createjs.Sound.registerSound("media/pika.wav", commandSetSound, maxActionsToProgram*4);
+
+
 }
 
 function preloadUpdate()
@@ -108,16 +113,16 @@ function launchGame()
 	board.Load();
 
 	var spriteP1 = new createjs.Sprite(getPlayerSpSheet(1), "idleright");
-	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, 0));
+	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39, attackup:49, attackdown:50, attackleft:51, attackright:52}, 0));
 
 	var spriteP2 = new createjs.Sprite(getPlayerSpSheet(2), "idleleft");
-	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, 1));
+	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68, attackup:53, attackdown:54, attackleft:55, attackright:56}, 1));
 
 	var spriteP3 = new createjs.Sprite(getPlayerSpSheet(3), "idleright");
-	players.push(new Player(spriteP3, {x:0, y:6}, {up:79, down:76, left:75, right:77}, 2));
+	players.push(new Player(spriteP3, {x:0, y:6}, {up:79, down:76, left:75, right:77, attackup:96, attackdown:97, attackleft:98, attackright:99}, 2));
 
 	var spriteP4 = new createjs.Sprite(getPlayerSpSheet(4), "idleleft");
-	players.push(new Player(spriteP4, {x:13, y:6}, {up:84, down:71, left:70, right:72}, 3));
+	players.push(new Player(spriteP4, {x:13, y:6}, {up:84, down:71, left:70, right:72, attackup:100, attackdown:101, attackleft:102, attackright:103}, 3));
 
 	GM = new GameMaster(players);
 	interfaceElement = new Interface();

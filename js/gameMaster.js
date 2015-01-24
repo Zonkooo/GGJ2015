@@ -8,6 +8,7 @@ function GameMaster(players)
 
 		var playersCurrentPositions = [];
 		var playersWantedPositions = [];
+		var playersWantedAttacks = [];
 
 		// STEP 1 : intentions
 		// find out where players want to move, and set the value if terrain allows
@@ -18,25 +19,47 @@ function GameMaster(players)
 
 			var wantedX = player.gridPosition.x;
 			var wantedY = player.gridPosition.y;
+			var wantedAttackX = -1;
+			var wantedAttackY = -1;
 
 			var action = player.programmedActions.pop();
 			if(action)
 			{
-				if(action == LEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] == '_') // left
+				if(action == LEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] == '_')
 				{
 					wantedX--;
 				}
-				else if(action == RIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] == '_') // right
+				else if(action == RIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] == '_')
 				{
 					wantedX++;
 				}
-				else if(action == UP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] == '_') // up
+				else if(action == UP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] == '_')
 				{
 					wantedY--;
 				}
-				else if(action == DOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] == '_') // down
+				else if(action == DOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] == '_')
 				{
 					wantedY++;
+				}
+				else if(action == ATTACKLEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] == '_')
+				{
+					wantedAttackX = player.gridPosition.x - 1;
+					wantedAttackY = player.gridPosition.y;
+				}
+				else if(action == ATTACKRIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] == '_')
+				{
+					wantedAttackX = player.gridPosition.x + 1;
+					wantedAttackY = player.gridPosition.y;
+				}
+				else if(action == ATTACKUP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] == '_')
+				{
+					wantedAttackX = player.gridPosition.x;
+					wantedAttackY = player.gridPosition.y - 1;
+				}
+				else if(action == ATTACKDOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] == '_')
+				{
+					wantedAttackX = player.gridPosition.x;
+					wantedAttackY = player.gridPosition.y + 1;
 				}
 
 				player.internalBitmap.gotoAndPlay(action);
@@ -44,17 +67,43 @@ function GameMaster(players)
 
 			playersCurrentPositions.push({x:player.gridPosition.x, y:player.gridPosition.y});
 			playersWantedPositions.push({x:wantedX, y:wantedY});
+			playersWantedAttacks.push({x:wantedAttackX, y:wantedAttackY});
 		}
 
-		// STEP 2 : collisions
-		// TODO : mecanism to avoid recomputing twice
+		// STEP 2 : attacks
+		for(p in this.players)
+		{
+			var currentPlayer = this.players[p];
+			if (playersWantedAttacks[currentPlayer.gamepadId].x != -1) // that player has an attack to do
+			{
+				//Display attack
+				currentPlayer.attackBitmap.x = gridInitX + blockSize * playersWantedAttacks[currentPlayer.gamepadId].x;
+				currentPlayer.attackBitmap.y = gridInitY + blockSize * playersWantedAttacks[currentPlayer.gamepadId].y;
+
+				//Check if someone was killed
+				for(o in this.players)
+				{
+					var otherPlayer = this.players[o];
+					if (playersWantedAttacks[currentPlayer.gamepadId].x == playersWantedPositions[otherPlayer.gamepadId].x
+						&&  playersWantedAttacks[currentPlayer.gamepadId].y ==playersWantedPositions[otherPlayer.gamepadId].y)
+					{
+						// we caught another player with the attack
+						// TODO : deal with counters.
+						otherPlayer.aliveState = "dead";
+						stage.removeChild(otherPlayer.internalBitmap);
+					}
+
+				}
+			}
+		}
+
+		// STEP 3 : collisions
 		var collisionsDone = [];
 		for(p in this.players)
 		{
 			var currentPlayer = this.players[p];
 			if (collisionsDone.indexOf(currentPlayer) != -1)
 			{
-				console.log("skipped one tile");
 				continue;
 			}
 			var collided = false;
