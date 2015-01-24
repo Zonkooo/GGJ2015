@@ -13,6 +13,7 @@ var isKeyPressed = [];
 var FPS = 60;
 var frameBeforeAction = FPS * 5;
 var elapsedFrames = 0;
+var currentTurn = 0;
 var gameState = "programActions";
 
 
@@ -103,8 +104,15 @@ function update(event)
 	else
 	{
 		// Update players
-		player1.updatePlayPhase();
-		player2.updatePlayPhase();
+		player1.updatePlayPhase(currentTurn);
+		player2.updatePlayPhase(currentTurn);
+
+		currentTurn++;
+		if(currentTurn >= maxActionsToProgram)
+		{
+			gameState = "programActions";
+			currentTurn = 0;
+		}
 	}
 	// Update main scene
 	stage.update();
