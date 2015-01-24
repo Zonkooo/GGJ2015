@@ -105,12 +105,12 @@ function launchGame()
 
 	var playerSheet = new createjs.SpriteSheet({
 			images: [imgPlayer1],
-			frames: {height: 100, width: 75, regY: 25},
+			frames: {height: 225, width: 225, regX: 75, regY: 75},
 			animations: {
-				down: [0, 0],
-				up: [1, 1],
-				right: [2, 2],
-				left: [3, 3],
+				down: [0, 3, "down", 0.1],
+				up: [4, 7, "up", 0.1],
+				right: [8, 11, "right", 0.1],
+				left: [12, 15, "left", 0.1],
 			}
 		});
 
