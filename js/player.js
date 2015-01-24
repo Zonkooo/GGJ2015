@@ -41,9 +41,11 @@ function Player(bitmap, position, controls, gamepadId)
 			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
 				this.animDone = true;
 
-			var spriteUnderPlayer = texturesPerBlock[this.gridPosition.y][this.gridPosition.x];
+			var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;
+			var dy = target.y - this.internalBitmap.y < 0 ? 1 : 0;
+			var redrawJustBefore = texturesPerBlock[this.gridPosition.y + dy][this.gridPosition.x + dx];
 			stage.removeChild(this.internalBitmap);
-			var index = stage.getChildIndex(spriteUnderPlayer);
+			var index = stage.getChildIndex(redrawJustBefore);
 			stage.addChildAt(this.internalBitmap, index+1);
 		}
 	}
