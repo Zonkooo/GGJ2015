@@ -10,7 +10,7 @@ var player1;
 
 var isKeyPressed = [];
 
-var FPS = 5;
+var FPS = 60;
 var frameBeforeAction = FPS * 5;
 var elapsedFrames = 0;
 var gameState = "programActions";
@@ -32,7 +32,7 @@ function preloadAssets()
 {
 	imgPlayer1.onload = preloadUpdate();
 	imgPlayer1.src = "media/pacman.png";
-	
+
 	imgObstacle.onload = preloadUpdate();
 	imgObstacle.src = "media/obstacle.png";
 
@@ -54,11 +54,15 @@ function launchGame()
 	sprites['.'] = imgGround;
 	board = new Board(sprites);
 	board.Load();
-	
+
 	var bitmapPlayer1 = new createjs.Bitmap(imgPlayer1); // will become a sprite
-	player1 = new Player(gridInitX, gridInitY, bitmapPlayer1);
+	player1 = new Player(bitmapPlayer1, {x:0, y:0}, {up:38, down:40, left:37, right:39});
 	stage.addChild(player1.internalBitmap);
-	
+
+	var bitmapPlayer2 = new createjs.Bitmap(imgPlayer1); // will become a sprite
+	player2 = new Player(bitmapPlayer2, {x:13, y:0}, {up:90, down:83, left:81, right:68});
+	stage.addChild(player2.internalBitmap);
+
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
 
@@ -85,8 +89,8 @@ function update(event)
 	if (gameState == "programActions")
 	{
 		elapsedFrames++;
-		console.log(elapsedFrames);
 		player1.updateProgramPhase();
+		player2.updateProgramPhase();
 
 
 		if (elapsedFrames >= frameBeforeAction)
@@ -100,6 +104,7 @@ function update(event)
 	{
 		// Update players
 		player1.updatePlayPhase();
+		player2.updatePlayPhase();
 	}
 	// Update main scene
 	stage.update();

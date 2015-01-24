@@ -1,39 +1,42 @@
 var sizeOfTileInPixels = 75;
 var maxActionsToProgram = 3;
 
-function Player(startx, starty, bitmap)
+function Player(bitmap, position, controls)
 {
 	this.internalBitmap = bitmap;
-	this.internalBitmap.x = startx;
-	this.internalBitmap.y = starty;
 
-	this.gridPosition = {x:0, y:0};
+	this.gridPosition = position;
+
+	this.internalBitmap.x = gridInitX + position.x*blockSize;
+	this.internalBitmap.y = gridInitY + position.y*blockSize;
 
 	this.programmedActions = [];
 	this.currentActionPlaying = 0;
+
+	this.controls = controls;
 
 	//called at each tick of play phase
 	this.updatePlayPhase = function()
 	{
 		//TODO : deal with incomplete inputs (not all actions have been programed)
-		//TODO : solve turn first and then dislay 
+		//TODO : solve turn first and then dislay
 		// read programmed actions.
-		if(this.programmedActions[this.currentActionPlaying] == 37 && this.gridPosition.x > 0 && level[this.gridPosition.y][this.gridPosition.x-1] == '.') // left
+		if(this.programmedActions[this.currentActionPlaying] == this.controls.left && this.gridPosition.x > 0 && level[this.gridPosition.y][this.gridPosition.x-1] == '.') // left
 		{
 			this.internalBitmap.x -= sizeOfTileInPixels;
 			this.gridPosition.x -=1;
 		}
-		if(this.programmedActions[this.currentActionPlaying] == 39 && this.gridPosition.x < level[0].length-1 && level[this.gridPosition.y][this.gridPosition.x+1] == '.') // right
+		if(this.programmedActions[this.currentActionPlaying] == this.controls.right && this.gridPosition.x < level[0].length-1 && level[this.gridPosition.y][this.gridPosition.x+1] == '.') // right
 		{
 			this.internalBitmap.x += sizeOfTileInPixels;
 			this.gridPosition.x +=1;
 		}
-		if(this.programmedActions[this.currentActionPlaying] == 38 && this.gridPosition.y > 0 && level[this.gridPosition.y-1][this.gridPosition.x] == '.') // up
+		if(this.programmedActions[this.currentActionPlaying] == this.controls.up && this.gridPosition.y > 0 && level[this.gridPosition.y-1][this.gridPosition.x] == '.') // up
 		{
 			this.internalBitmap.y -= sizeOfTileInPixels;
 			this.gridPosition.y -=1;
 		}
-		if(this.programmedActions[this.currentActionPlaying] == 40 && this.gridPosition.y < level.length-1 && level[this.gridPosition.y+1][this.gridPosition.x] == '.') // down
+		if(this.programmedActions[this.currentActionPlaying] == this.controls.down && this.gridPosition.y < level.length-1 && level[this.gridPosition.y+1][this.gridPosition.x] == '.') // down
 		{
 			this.internalBitmap.y += sizeOfTileInPixels;
 			this.gridPosition.y +=1;
@@ -51,9 +54,6 @@ function Player(startx, starty, bitmap)
 		stage.removeChild(this.internalBitmap);
 		var index = stage.getChildIndex(spriteUnderPlayer);
 		stage.addChildAt(this.internalBitmap, index+1);
-
-
-
 	}
 
 	this.prevState = [];
@@ -64,29 +64,29 @@ function Player(startx, starty, bitmap)
 		// store actions
 		if (this.programmedActions.length <= maxActionsToProgram)
 		{
-			if(!this.prevState[37] && isKeyPressed[37]) // left
+			if(!this.prevState[this.controls.left] && isKeyPressed[this.controls.left]) // left
 			{
-				this.programmedActions.push(37);
+				this.programmedActions.push(this.controls.left);
 			}
-			this.prevState[37] = isKeyPressed[37];
+			this.prevState[this.controls.left] = isKeyPressed[this.controls.left];
 
-			if(!this.prevState[39] && isKeyPressed[39]) // right
+			if(!this.prevState[this.controls.right] && isKeyPressed[this.controls.right]) // right
 			{
-				this.programmedActions.push(39);
+				this.programmedActions.push(this.controls.right);
 			}
-			this.prevState[39] = isKeyPressed[39];
+			this.prevState[this.controls.right] = isKeyPressed[this.controls.right];
 
-			if(!this.prevState[38] && isKeyPressed[38]) // up
+			if(!this.prevState[this.controls.up] && isKeyPressed[this.controls.up]) // up
 			{
-				this.programmedActions.push(38);
+				this.programmedActions.push(this.controls.up);
 			}
-			this.prevState[38] = isKeyPressed[38];
+			this.prevState[this.controls.up] = isKeyPressed[this.controls.up];
 
-			if(!this.prevState[40] && isKeyPressed[40]) // down
+			if(!this.prevState[this.controls.down] && isKeyPressed[this.controls.down]) // down
 			{
-				this.programmedActions.push(40);
+				this.programmedActions.push(this.controls.down);
 			}
-			this.prevState[40] = isKeyPressed[40];
+			this.prevState[this.controls.down] = isKeyPressed[this.controls.down];
 		}
 	}
 }
