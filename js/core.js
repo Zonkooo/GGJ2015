@@ -16,6 +16,8 @@ var imgGreenGem = new Image();
 var imgBg = new Image();
 
 var commandSetSound = "commandSet";
+var commandCompleteSound = "commandComplete";
+//var soundtrackSound = "soundtrack";
 
 var players = [];
 var GM;
@@ -85,9 +87,9 @@ function preloadAssets()
 	imgGreenGem.src = "media/spr_gui_gem_verte.png";
 
 
-	createjs.Sound.registerSound("media/pika.wav", commandSetSound, maxActionsToProgram*4);
-
-
+	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
+	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, maxActionsToProgram*4);
+	//createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, maxActionsToProgram*4);
 }
 
 function preloadUpdate()

@@ -107,7 +107,11 @@ function Player(bitmap, position, controls, gamepadId)
 			if((!this.prevState[source] && isKeyPressed[source]) || (!this.prevGamePadState[source] && this.gamePadState[source]))
 			{
 				this.programmedActions.push(outcome);
-				createjs.Sound.play(commandSetSound);
+				if (this.programmedActions.length < maxActionsToProgram) {
+					createjs.Sound.play(commandSetSound);
+				} else {
+					createjs.Sound.play(commandCompleteSound);
+				}
 			}
 		}
 		this.prevState[source] = isKeyPressed[source];
