@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 18;
+var preloadTotal = 20;
 
 var stage;
 var imgPlayers = [];
@@ -87,8 +87,9 @@ function preloadAssets()
 	imgGreenGem.src = "media/spr_gui_gem_verte.png";
 
 
+	createjs.Sound.addEventListener("fileload", preloadUpdate);
 	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
-	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, maxActionsToProgram*4);
+	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
 	//createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, maxActionsToProgram*4);
 }
 
