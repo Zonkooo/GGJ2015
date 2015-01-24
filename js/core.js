@@ -89,6 +89,7 @@ function launchGame()
 
 	GM = new GameMaster([player1, player2]);
 	interfaceElement = new Interface();
+	interfaceElement.load();
 	
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
