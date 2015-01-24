@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 17;
+var preloadTotal = 18;
 
 var stage;
 var imgPlayers = [];
@@ -12,6 +12,8 @@ var imgBlueGem = new Image();
 var imgYellowGem = new Image();
 var imgPinkGem = new Image();
 var imgGreenGem = new Image();
+
+var imgBg = new Image();
 
 var commandSetSound = "commandSet";
 
@@ -45,6 +47,10 @@ function startGame()
 
 function preloadAssets()
 {
+
+	imgBg.onload = preloadUpdate();
+	imgBg.src = "media/spr_gui_background.png";
+
 	for(i = 1; i <= 4; i++)
 	{
 		var player = new Image();
@@ -207,6 +213,7 @@ function update(event)
 	}
 	else
 	{
+		// TODO : if 3 chars are dead, reset the game
 		var allDone = true;
 		// Update players
 		for(p in players)

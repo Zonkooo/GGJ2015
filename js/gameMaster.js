@@ -152,7 +152,6 @@ function GameMaster(players)
 						}
 						else // he dies
 						{
-							// TODO : proper remove (no actions possible)
 							otherPlayer.aliveState = "dead";
 							otherPlayer.internalBitmap.visible = false;
 							stage.removeChild(otherPlayer.internalBitmap);

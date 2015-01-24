@@ -1,6 +1,6 @@
 function Interface()
 {
-	var timer = new createjs.Text("pouet", "50px Courier", "#ff0000");
+	var timer = new createjs.Text("pouet", "50px Courier", "#000000");
  	timer.x = 600;
  	timer.y = 20;
 	timer.textAlign = "center";
@@ -9,10 +9,10 @@ function Interface()
  	this.uiElements = [[]];
 
 	this.positions = [
-		{x:10, y:10},
-		{x:stage.canvas.width - (maxActionsToProgram*100) + 10, y:10},
-		{x:10, y:stage.canvas.height - 60 - 10},
-		{x:stage.canvas.width - (maxActionsToProgram*100) + 10, y:stage.canvas.height - 60 - 10},
+		{x:28, y:28},
+		{x:stage.canvas.width - (maxActionsToProgram*100) + 28, y:28},
+		{x:28, y:stage.canvas.height - 60 + 5},
+		{x:stage.canvas.width - (maxActionsToProgram*100) + 28, y:stage.canvas.height - 60 + 5},
 	];
 
  	this.load = function()
@@ -33,6 +33,10 @@ function Interface()
 				stage.addChildAt(this.uiElements[playerIndex][index], 0);
 			}
 		}
+		// draw backgound
+		var bg = new createjs.Bitmap(imgBg);
+		bg.alpha = 0.9;
+		stage.addChildAt(bg, 0);
  	}
 
 
