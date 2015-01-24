@@ -60,10 +60,15 @@ function Player(bitmap, position, controls, gamepadId)
 		this.gamePadState = [];
 		if(gamepads[this.gamepadId])
 		{
-			this.gamePadState[this.controls.left] |= gamepads[this.gamepadId].buttons[controlsPad.left].value == 1;
-			this.gamePadState[this.controls.right] |= gamepads[this.gamepadId].buttons[controlsPad.right].value == 1;
-			this.gamePadState[this.controls.up] |= gamepads[this.gamepadId].buttons[controlsPad.up].value == 1;
-			this.gamePadState[this.controls.down] |= gamepads[this.gamepadId].buttons[controlsPad.down].value == 1;
+			var pad = gamepads[this.gamepadId];
+			this.gamePadState[this.controls.left] = pad.buttons[controlsPad.left].value == 1
+				|| pad.axes[0] < -0.5;
+			this.gamePadState[this.controls.right] = pad.buttons[controlsPad.right].value == 1
+				|| pad.axes[0] > 0.5;
+			this.gamePadState[this.controls.up] = pad.buttons[controlsPad.up].value == 1
+				|| pad.axes[1] < -0.5;
+			this.gamePadState[this.controls.down] = pad.buttons[controlsPad.down].value == 1
+				|| pad.axes[1] > 0.5;
 		}
 
 		if (this.programmedActions.length < maxActionsToProgram)
