@@ -1,13 +1,17 @@
 var preloadCount = 0;
-var preloadTotal = 14;
+var preloadTotal = 17;
 
 var stage;
 var imgPlayers = [];
 var imgObstacles = [];
 var imgGround = new Image();
-var imgCommandSet = new Image();
-var imgCommandNotSet = new Image();
 var imgFireball = new Image();
+
+var imgEmptyGem = new Image();
+var imgBlueGem = new Image();
+var imgYellowGem = new Image();
+var imgPinkGem = new Image();
+var imgGreenGem = new Image();
 
 var commandSetSound = "commandSet";
 
@@ -59,15 +63,22 @@ function preloadAssets()
 
 	imgGround.onload = preloadUpdate();
 	imgGround.src = "media/env/roads.png";
-
-	imgCommandSet.onload = preloadUpdate();
-	imgCommandSet.src = "media/commandSet.png";
-
-	imgCommandNotSet.onload = preloadUpdate();
-	imgCommandNotSet.src = "media/commandNotSet.png";
 	
 	imgFireball.onload = preloadUpdate();
 	imgFireball.src = "media/fireball.png";
+
+	imgEmptyGem.onload = preloadUpdate();
+	imgEmptyGem.src = "media/spr_gui_gem_empty.png";
+	imgBlueGem.onload = preloadUpdate();
+	imgBlueGem.src = "media/spr_gui_gem_blue.png";
+	imgYellowGem.onload = preloadUpdate();
+	imgYellowGem.src = "media/spr_gui_gem_jaune.png";
+	imgPinkGem.onload = preloadUpdate();
+	imgPinkGem.src = "media/spr_gui_gem_purple.png";
+	imgGreenGem.onload = preloadUpdate();
+	imgGreenGem.src = "media/spr_gui_gem_verte.png";
+
+
 	createjs.Sound.registerSound("media/pika.wav", commandSetSound, maxActionsToProgram*4);
 
 
@@ -232,6 +243,11 @@ function update(event)
 
 	// Update main scene
 	stage.update();
+}
+
+function resetGame()
+{
+	// TODO
 }
 
 

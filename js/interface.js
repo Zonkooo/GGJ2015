@@ -28,7 +28,7 @@ function Interface()
 			this.uiElements.push([]);
 			for (index = 0; index < maxActionsToProgram ; ++index)
 			{
-			    interfaceElement = new createjs.Bitmap(imgCommandNotSet);
+			    interfaceElement = new createjs.Bitmap(imgEmptyGem);
 				this.uiElements[playerIndex].push(interfaceElement);
 				stage.addChildAt(this.uiElements[playerIndex][index], 0);
 			}
@@ -46,10 +46,19 @@ function Interface()
 			for (index = 0; index < maxActionsToProgram ; ++index)
 			{
 				if (players[playerIndex].programmedActions.length > index) {
-			    	this.uiElements[playerIndex][index].image = imgCommandSet;
+					if (playerIndex == 0) {
+			    		this.uiElements[playerIndex][index].image = imgGreenGem;
+			    	} else if (playerIndex == 1) {
+			    		this.uiElements[playerIndex][index].image = imgYellowGem;
+			    	} else if (playerIndex == 2) {
+			    		this.uiElements[playerIndex][index].image = imgBlueGem;
+			    	} else if (playerIndex == 3) {
+			    		this.uiElements[playerIndex][index].image = imgPinkGem;
+			    	}
+
 			    }
 			    else {
-			    	this.uiElements[playerIndex][index].image = imgCommandNotSet;
+			    	this.uiElements[playerIndex][index].image = imgEmptyGem;
 			    }
 			    this.uiElements[playerIndex][index].x = pos.x + index * 100;
 				this.uiElements[playerIndex][index].y = pos.y;
