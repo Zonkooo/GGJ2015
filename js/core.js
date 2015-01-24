@@ -63,11 +63,11 @@ function launchGame()
 	board.Load();
 
 	var bitmapPlayer1 = new createjs.Bitmap(imgPlayer1); // will become a sprite
-	player1 = new Player(bitmapPlayer1, {x:0, y:0}, {up:38, down:40, left:37, right:39});
+	player1 = new Player(bitmapPlayer1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, -1);
 	stage.addChild(player1.internalBitmap);
 
 	var bitmapPlayer2 = new createjs.Bitmap(imgPlayer1); // will become a sprite
-	player2 = new Player(bitmapPlayer2, {x:13, y:0}, {up:90, down:83, left:81, right:68});
+	player2 = new Player(bitmapPlayer2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, -1);
 	stage.addChild(player2.internalBitmap);
 
 	GM = new GameMaster([player1, player2]);
@@ -95,11 +95,6 @@ function code(e)
 
 function update(event)
 {
-	if (gamepads[0] != null)
-	{
-		console.log(gamepads[0].buttons[0]);
-	}
-
 	if (gameState == "programActions")
 	{
 		elapsedFrames++;
