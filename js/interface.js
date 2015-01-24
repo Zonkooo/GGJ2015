@@ -1,8 +1,9 @@
 function Interface()
 {
-	var timer = new createjs.Text("Starting...", "50px Courier", "#ff0000");
+	var timer = new createjs.Text("pouet", "50px Courier", "#ff0000");
  	timer.x = 600;
  	timer.y = 20;
+	timer.textAlign = "center";
  	stage.addChild(timer);
 
  	this.uiElements = [[]];
@@ -56,7 +57,7 @@ function Interface()
 		}
 
 		// update timer
-		timer.text = Math.round((frameBeforeAction - elapsedFrames) / 60 * 100)  /100;
+		timer.text = ((frameBeforeAction - elapsedFrames) / 60).toFixed(2);
 
 	}
 }
