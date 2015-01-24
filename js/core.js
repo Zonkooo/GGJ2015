@@ -1,8 +1,8 @@
 var preloadCount = 0;
-var preloadTotal = 10;
+var preloadTotal = 13;
 
 var stage;
-var imgPlayer1 = new Image();
+var imgPlayers = [];
 var imgObstacles = [];
 var imgGround = new Image();
 var imgCommandSet = new Image();
@@ -40,8 +40,13 @@ function startGame()
 
 function preloadAssets()
 {
-	imgPlayer1.onload = preloadUpdate();
-	imgPlayer1.src = "media/gozilla_spritesheet.png";
+	for(i = 1; i <= 4; i++)
+	{
+		var player = new Image();
+		player.onload = preloadUpdate();
+		player.src = "media/gozilla_spritesheet" + i + ".png";
+		imgPlayers.push(player);
+	}
 
 	for(i = 1; i <= 6; i++)
 	{
@@ -102,33 +107,16 @@ function launchGame()
 	board = new Board(sprites);
 	board.Load();
 
-
-	var playerSheet = new createjs.SpriteSheet({
-			images: [imgPlayer1],
-			frames: {height: 225, width: 225, regX: 75, regY: 75},
-			animations: {
-				down: [0, 3, "down", 0.1],
-				up: [8, 11, "up", 0.1],
-				right: [16, 19, "right", 0.1],
-				left: [24, 27, "left", 0.1],
-
-				idledown: [4, 5, "idledown", 0.1],
-				idleup: [12, 13, "idleup", 0.1],
-				idleright: [20, 21, "idleright", 0.1],
-				idleleft: [28, 29, "idleleft", 0.1],
-			}
-		});
-
-	var spriteP1 = new createjs.Sprite(playerSheet, "idleright");
+	var spriteP1 = new createjs.Sprite(getPlayerSpSheet(1), "idleright");
 	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39}, 0));
 
-	var spriteP2 = new createjs.Sprite(playerSheet, "idleleft");
+	var spriteP2 = new createjs.Sprite(getPlayerSpSheet(2), "idleleft");
 	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68}, 1));
 
-	var spriteP3 = new createjs.Sprite(playerSheet, "idleright");
+	var spriteP3 = new createjs.Sprite(getPlayerSpSheet(3), "idleright");
 	players.push(new Player(spriteP3, {x:0, y:6}, {up:79, down:76, left:75, right:77}, 2));
 
-	var spriteP4 = new createjs.Sprite(playerSheet, "idleleft");
+	var spriteP4 = new createjs.Sprite(getPlayerSpSheet(4), "idleleft");
 	players.push(new Player(spriteP4, {x:13, y:6}, {up:84, down:71, left:70, right:72}, 3));
 
 	GM = new GameMaster(players);
@@ -147,6 +135,25 @@ function launchGame()
 	    var key = code(e);
 	    isKeyPressed[key] = false;
 	};
+}
+
+function getPlayerSpSheet(num)
+{
+	return new createjs.SpriteSheet({
+				images: [imgPlayers[num-1]],
+				frames: {height: 225, width: 225, regX: 75, regY: 75},
+				animations: {
+					down: [0, 3, "down", 0.1],
+					up: [8, 11, "up", 0.1],
+					right: [16, 19, "right", 0.1],
+					left: [24, 27, "left", 0.1],
+
+					idledown: [4, 5, "idledown", 0.1],
+					idleup: [12, 13, "idleup", 0.1],
+					idleright: [20, 21, "idleright", 0.1],
+					idleleft: [28, 29, "idleleft", 0.1],
+				}
+			});
 }
 
 function code(e)
