@@ -4,7 +4,7 @@ function Interface()
  	timer.x = 600;
  	timer.y = 20;
 	timer.textAlign = "center";
- 	stage.addChild(timer);
+ 	stage.addChildAt(timer, 0);
 
  	this.uiElements = [[]];
 
@@ -30,7 +30,7 @@ function Interface()
 			{
 			    interfaceElement = new createjs.Bitmap(imgCommandNotSet);
 				this.uiElements[playerIndex].push(interfaceElement);
-				stage.addChild(this.uiElements[playerIndex][index]);
+				stage.addChildAt(this.uiElements[playerIndex][index], 0);
 			}
 		}
  	}
