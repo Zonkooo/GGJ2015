@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 5;
+var preloadTotal = 10;
 
 var stage;
 var imgPlayer1 = new Image();
@@ -52,7 +52,7 @@ function preloadAssets()
 	}
 
 	imgGround.onload = preloadUpdate();
-	imgGround.src = "media/env/road_cross.png";
+	imgGround.src = "media/env/roads.png";
 
 	imgCommandSet.onload = preloadUpdate();
 	imgCommandSet.src = "media/commandSet.png";
@@ -76,9 +76,32 @@ function launchGame()
 
 	var sprites = [];
 	sprites['X'] = imgObstacles;
-	sprites['.'] = [imgGround];
+
+	var groundSheet = new createjs.SpriteSheet({
+			images: [imgGround],
+			frames: {height: 100, width: 75},
+			animations: {
+				XX_X: [0,  0],
+				_XXX: [2,  2],
+				XXX_: [4,  4],
+				X_XX: [6,  6],
+				X__X: [8,  8],
+				_XX_: [10, 10],
+				XX__: [12, 12],
+				__XX: [14, 14],
+				_X_X: [16, 16],
+				X_X_: [18, 18],
+				____: [20, 20],
+				X___: [22, 22],
+				_X__: [24, 24],
+				__X_: [26, 26],
+				___X: [28, 28],
+			}
+		});
+	sprites['_'] = [groundSheet];
 	board = new Board(sprites);
 	board.Load();
+
 
 	var playerSheet = new createjs.SpriteSheet({
 			images: [imgPlayer1],
