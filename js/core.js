@@ -168,7 +168,7 @@ function update(event)
 			GM.Update();
 
 			currentTurn++;
-			if(currentTurn >= maxActionsToProgram)
+			if(currentTurn >= maxActionsToProgram+1)
 			{
 				gameState = "programActions";
 				currentTurn = 0;
