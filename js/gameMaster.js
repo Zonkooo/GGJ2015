@@ -146,7 +146,7 @@ function GameMaster(players)
 
 
 						otherPlayer.aliveState = "dead";
-						otherPlayer.internalBitmap.visible = false;
+						stage.removeChild(otherPlayer.internalBitmap);
 					}
 
 				}

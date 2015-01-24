@@ -81,11 +81,10 @@ function Player(bitmap, position, controls, gamepadId)
 				|| pad.axes[1] < -0.5;
 			this.gamePadState[this.controls.down] = pad.buttons[controlsPad.down].value == 1
 				|| pad.axes[1] > 0.5;
-			this.gamePadState[this.controls.down] = pad.buttons[controlsPad.down].value == 1
 			this.gamePadState[this.controls.attackleft] |= gamepads[this.gamepadId].buttons[controlsPad.attackleft].value == 1;
 			this.gamePadState[this.controls.attackright] |= gamepads[this.gamepadId].buttons[controlsPad.attackright].value == 1;
 			this.gamePadState[this.controls.attackup] |= gamepads[this.gamepadId].buttons[controlsPad.attackup].value == 1;
-			this.gamePadState[this.controls.attackdown] |= gamepads[this.gamepadId].buttons[controlsPad.at
+			this.gamePadState[this.controls.attackdown] |= gamepads[this.gamepadId].buttons[controlsPad.attackdown].value == 1;
 		}
 
 		if (this.programmedActions.length < maxActionsToProgram)
