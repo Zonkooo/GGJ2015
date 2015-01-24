@@ -15,6 +15,8 @@ function Player(bitmap, position, controls, gamepadId)
 
 	this.gridPosition = position;
 
+	this.aliveState = "alive";
+
 	this.internalBitmap.x = gridInitX + position.x*blockSize;
 	this.internalBitmap.y = gridInitY + position.y*blockSize;
 

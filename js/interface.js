@@ -57,7 +57,7 @@ function Interface()
 		}
 
 		// update timer
-		timer.text = ((frameBeforeAction - elapsedFrames) / 60).toFixed(2);
+		timer.text = ((frameBeforeAction - elapsedFrames) / FPS).toFixed(2);
 
 	}
 }

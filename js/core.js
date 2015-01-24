@@ -16,7 +16,7 @@ var interfaceElement;
 
 var isKeyPressed = [];
 
-var FPS = 60;
+FPS = 60;
 var secondsBeforeAction = 5;
 var frameBeforeAction = FPS * secondsBeforeAction;
 var elapsedFrames = 0;
