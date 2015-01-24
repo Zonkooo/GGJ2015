@@ -51,48 +51,54 @@ function Player(bitmap, position, controls, gamepadId)
 	}
 
 	this.prevState = [];
+	this.prevGamePadState = [];
 
 	//	called at each tick of program Phase
 	this.updateProgramPhase = function()
 	{
 		//transform gamepad actions in key presses
+		var gamePadState = [];
 		if(gamepads[this.gamepadId])
 		{
-			isKeyPressed[this.controls.left] |= gamepads[this.gamepadId].buttons[controlsPad.left].value == 1;
-			isKeyPressed[this.controls.right] |= gamepads[this.gamepadId].buttons[controlsPad.right].value == 1;
-			isKeyPressed[this.controls.up] |= gamepads[this.gamepadId].buttons[controlsPad.up].value == 1;
-			isKeyPressed[this.controls.down] |= gamepads[this.gamepadId].buttons[controlsPad.down].value == 1;
+			gamePadState[this.controls.left] |= gamepads[this.gamepadId].buttons[controlsPad.left].value == 1;
+			gamePadState[this.controls.right] |= gamepads[this.gamepadId].buttons[controlsPad.right].value == 1;
+			gamePadState[this.controls.up] |= gamepads[this.gamepadId].buttons[controlsPad.up].value == 1;
+			gamePadState[this.controls.down] |= gamepads[this.gamepadId].buttons[controlsPad.down].value == 1;
 		}
 
 		if (this.programmedActions.length < maxActionsToProgram)
 		{
-			if(!this.prevState[this.controls.left] && isKeyPressed[this.controls.left]) // left
+			if((!this.prevState[this.controls.left] && isKeyPressed[this.controls.left]) || (!this.prevGamePadState[this.controls.left] && gamePadState[this.controls.left]))
 			{
 				this.programmedActions.push(LEFT);
 				createjs.Sound.play(commandSetSound);
 			}
 			this.prevState[this.controls.left] = isKeyPressed[this.controls.left];
+			this.prevGamePadState[this.controls.left] = gamePadState[this.controls.left];
 
-			if(!this.prevState[this.controls.right] && isKeyPressed[this.controls.right]) // right
+			if((!this.prevState[this.controls.right] && isKeyPressed[this.controls.right]) || (!this.prevGamePadState[this.controls.right] && gamePadState[this.controls.right]))
 			{
 				this.programmedActions.push(RIGHT);
 				createjs.Sound.play(commandSetSound);
 			}
 			this.prevState[this.controls.right] = isKeyPressed[this.controls.right];
+			this.prevGamePadState[this.controls.right] = gamePadState[this.controls.right];
 
-			if(!this.prevState[this.controls.up] && isKeyPressed[this.controls.up]) // up
+			if((!this.prevState[this.controls.up] && isKeyPressed[this.controls.up]) || (!this.prevGamePadState[this.controls.up] && gamePadState[this.controls.up]))
 			{
 				this.programmedActions.push(UP);
 				createjs.Sound.play(commandSetSound);
 			}
 			this.prevState[this.controls.up] = isKeyPressed[this.controls.up];
+			this.prevGamePadState[this.controls.up] = gamePadState[this.controls.up];
 
-			if(!this.prevState[this.controls.down] && isKeyPressed[this.controls.down]) // down
+			if((!this.prevState[this.controls.down] && isKeyPressed[this.controls.down]) || (!this.prevGamePadState[this.controls.down] && gamePadState[this.controls.down]))
 			{
 				this.programmedActions.push(DOWN);
 				createjs.Sound.play(commandSetSound);
 			}
 			this.prevState[this.controls.down] = isKeyPressed[this.controls.down];
+			this.prevGamePadState[this.controls.down] = gamePadState[this.controls.down];
 		}
 	}
 }
