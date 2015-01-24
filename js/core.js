@@ -95,6 +95,11 @@ function code(e)
 
 function update(event)
 {
+	if (gamepads[0] != null)
+	{
+		console.log(gamepads[0].buttons[0]);
+	}
+
 	if (gameState == "programActions")
 	{
 		elapsedFrames++;
@@ -131,46 +136,26 @@ function update(event)
 	stage.update();
 }
 
+
+
+/////////////////// Gamepad support //////////////
+ticking = false;
+prevRawGamepadTypes = [];
+prevTimestamps = [];
+
 function initGamepad()
 {
-	// Check and see if gamepadconnected/gamepaddisconnected is supported.
-	// If so, listen for those events and don't start polling until a gamepad
-	// has been connected.
-	if ('ongamepadconnected' in window) 
-	{
-	window.addEventListener('gamepadconnected',
-	              onGamepadConnect, false);
-	window.addEventListener('gamepaddisconnected',
-	                onGamepadDisconnect, false);
-	} 
-	else 
-	{
-	// If connection events are not supported just start polling
 	startPolling();
-	}
 }
 
-/**
-   * React to the gamepad being connected.
-   */
-function  onGamepadConnect(event) {
-    // Add the new gamepad on the list of gamepads to look after.
+function onGamepadConnect(event)
+{
     gamepads.push(event.gamepad);
-
-    // Ask the tester to update the screen to show more gamepads.
-    //tester.updateGamepads(gamepadSupport.gamepads);
-
-    // Start the polling loop to monitor button changes.
     startPolling();
-  }
+}
 
-  /**
-   * Starts a polling loop to check for gamepad state.
-   */
-   ticking = false;
-   prevRawGamepadTypes = [];
-   prevTimestamps = [];
-function  startPolling() {
+function startPolling()
+{
     // Don’t accidentally start a second loop, man.
     if (!ticking) {
       ticking = true;
@@ -178,93 +163,62 @@ function  startPolling() {
     }
   }
 
-  function gamepadtick() {
-    pollStatus();
-    scheduleNextTick();
-  }
+function gamepadtick()
+{	
+	pollStatus();
+	scheduleNextTick();
+}
 
-  function scheduleNextTick() 
-  {
-    // Only schedule the next frame if we haven’t decided to stop via
-    // stopPolling() before.
-    if (ticking) {
-      if (window.requestAnimationFrame) {
-        window.requestAnimationFrame(gamepadtick);
-      } else if (window.mozRequestAnimationFrame) {
-        window.mozRequestAnimationFrame(gamepadtick);
-      } else if (window.webkitRequestAnimationFrame) {
-        window.webkitRequestAnimationFrame(gamepadtick);
-      }
-      // Note lack of setTimeout since all the browsers that support
-      // Gamepad API are already supporting requestAnimationFrame().
-    }
-  }
+function scheduleNextTick() 
+{
+// Only schedule the next frame if we haven’t decided to stop via
+// stopPolling() before.
+	if (ticking)
+	{
+	  if (window.requestAnimationFrame) {
+	    window.requestAnimationFrame(gamepadtick);
+	  } else if (window.mozRequestAnimationFrame) {
+	    window.mozRequestAnimationFrame(gamepadtick);
+	  } else if (window.webkitRequestAnimationFrame) {
+	    window.webkitRequestAnimationFrame(gamepadtick);
+	  }
+	  // Note lack of setTimeout since all the browsers that support
+	  // Gamepad API are already supporting requestAnimationFrame().
+	}
+}
+function pollStatus() 
+{
+pollGamepads();
 
-  /**
-   * Checks for the gamepad status. Monitors the necessary data and notices
-   * the differences from previous state (buttons for Chrome/Firefox,
-   * new connects/disconnects for Chrome). If differences are noticed, asks
-   * to update the display accordingly. Should run as close to 60 frames per
-   * second as possible.
-   */
-  function pollStatus() 
-  {
-    // Poll to see if gamepads are connected or disconnected. Necessary
-    // only on Chrome.
-    pollGamepads();
+	for (var i in gamepads) {
+	  var gamepad = gamepads[i];
+	  if (gamepad.timestamp &&
+	      (gamepad.timestamp == prevTimestamps[i])) {
+	    continue;
+	  }
+	  prevTimestamps[i] = gamepad.timestamp;
+	}
+}
 
-    for (var i in gamepads) {
-      var gamepad = gamepads[i];
+function pollGamepads()
+{
+	var rawGamepads =
+	    (navigator.getGamepads && navigator.getGamepads()) ||
+	    (navigator.webkitGetGamepads && navigator.webkitGetGamepads());
 
-      // Don’t do anything if the current timestamp is the same as previous
-      // one, which means that the state of the gamepad hasn’t changed.
-      // This is only supported by Chrome right now, so the first check
-      // makes sure we’re not doing anything if the timestamps are empty
-      // or undefined.
-      if (gamepad.timestamp &&
-          (gamepad.timestamp == prevTimestamps[i])) {
-        continue;
-      }
-      prevTimestamps[i] = gamepad.timestamp;
+	if (rawGamepads) {
+	  gamepads = [];
+	  var gamepadsChanged = false;
 
-      updateButtonsPressed(i);
-    }
-  }
+	  for (var i = 0; i < rawGamepads.length; i++) {
+	    if (typeof rawGamepads[i] != prevRawGamepadTypes[i]) {
+	      gamepadsChanged = true;
+	      prevRawGamepadTypes[i] = typeof rawGamepads[i];
+	    }
 
-  function pollGamepads() {
-    // Get the array of gamepads – the first method (getGamepads)
-    // is the most modern one and is supported by Firefox 28+ and
-    // Chrome 35+. The second one (webkitGetGamepads) is a deprecated method
-    // used by older Chrome builds.
-    var rawGamepads =
-        (navigator.getGamepads && navigator.getGamepads()) ||
-        (navigator.webkitGetGamepads && navigator.webkitGetGamepads());
-
-    if (rawGamepads) {
-      // We don’t want to use rawGamepads coming straight from the browser,
-      // since it can have “holes” (e.g. if you plug two gamepads, and then
-      // unplug the first one, the remaining one will be at index [1]).
-      gamepads = [];
-
-      // We only refresh the display when we detect some gamepads are new
-      // or removed; we do it by comparing raw gamepad table entries to
-      // “undefined.”
-      var gamepadsChanged = false;
-
-      for (var i = 0; i < rawGamepads.length; i++) {
-        if (typeof rawGamepads[i] != prevRawGamepadTypes[i]) {
-          gamepadsChanged = true;
-          prevRawGamepadTypes[i] = typeof rawGamepads[i];
-        }
-
-        if (rawGamepads[i]) {
-          gamepads.push(rawGamepads[i]);
-        }
-      }
-    }
-  }
-
-  function updateButtonsPressed(gamepadId)
-  {
-  	var gamepad = gamepads[gamepadId];
-  }
+	    if (rawGamepads[i]) {
+	      gamepads.push(rawGamepads[i]);
+	    }
+	  }
+	}
+}
