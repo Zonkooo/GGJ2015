@@ -44,9 +44,8 @@ function GameMaster(players)
 			playersWantedPositions.push({x:wantedX, y:wantedY});
 		}
 
-
 		// STEP 2 : collisions
-		/*var collisionsDoneForPlayer = [];
+		var collisionsDoneForPlayer = [];
 		for(p in this.players)
 		{
 			var currentPlayer = this.players[p];
@@ -56,7 +55,6 @@ function GameMaster(players)
 				continue;
 			}
 
-			console.log(currentPlayer.gamepadId);
 			for(o in this.players)
 			{
 				var otherPlayer = this.players[o];
@@ -66,7 +64,7 @@ function GameMaster(players)
 				if (playersWantedPositions[currentPlayer.gamepadId] == playersCurrentPositions[otherPlayer.gamepadId] 
 					&& playersWantedPositions[otherPlayer.gamepadId] == playersCurrentPositions[currentPlayer.gamepadId])
 				{
-					playersPositions[wantedY][wantedX] = undefined;
+					playersPositions[playersWantedPositions[currentPlayer.gamepadId].y][playersWantedPositions[currentPlayer.gamepadId].x] = undefined;
 					collisionsDoneForPlayer[currentPlayer] = true;
 					collisionsDoneForPlayer[otherPlayer] = true;
 				}
@@ -80,24 +78,9 @@ function GameMaster(players)
 				// valid move !
 				else 
 				{
-					playersPositions[wantedY][wantedX] = currentPlayer;
+					playersPositions[playersWantedPositions[currentPlayer.gamepadId].y][playersWantedPositions[currentPlayer.gamepadId].x] = currentPlayer;
 				}
-
-
 			}
-		}*/
-
-		
-		
-		// STEP 3 : move players in gamemaster representation
-		for(p in this.players)
-		{
-			player = this.players[p];
-
-			if(!playersPositions[playersWantedPositions[player.gamepadId].y][playersWantedPositions[player.gamepadId].x])
-				playersPositions[playersWantedPositions[player.gamepadId].y][playersWantedPositions[player.gamepadId].x] = player;
-			else
-				playersPositions[playersWantedPositions[player.gamepadId].y][playersWantedPositions[player.gamepadId].x] = undefined;
 		}
 
 		// STEP 4 : move update coordinates inside player
