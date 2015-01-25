@@ -5,7 +5,7 @@ function Board(sprites)
 	blockSize = 75;
 	blockExtraHeight = 25;
 
-	var level;
+	level = [];
 	levels = [];
 
 	levels[1] = [ // 14 x 7 squares
