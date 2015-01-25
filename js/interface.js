@@ -1,5 +1,3 @@
-
-
 function Interface()
 {
 	var timer = new createjs.Text("pouet", "50px Courier", "white");
@@ -16,6 +14,7 @@ function Interface()
 		{x:28, y:stage.canvas.height - 60 + 5},
 		{x:stage.canvas.width - (maxActionsToProgram*100) + 28, y:stage.canvas.height - 60 + 5},
 	];
+
 
  	this.load = function()
  	{
@@ -84,6 +83,10 @@ function Interface()
 		{
 			timer.text = remaining;
 		}
+
+
+
+
 
 	}
 }

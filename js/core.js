@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 21;
+var preloadTotal = 23;
 
 var stage;
 var imgPlayers = [];
@@ -15,6 +15,9 @@ var imgPinkGem = new Image();
 var imgGreenGem = new Image();
 
 var imgBg = new Image();
+
+var imgStartProg = new Image();
+var imgEndProg = new Image();
 
 var commandSetSound = "commandSet";
 var commandCompleteSound = "commandComplete";
@@ -35,6 +38,8 @@ var gameState = "programActions";
 
 var gamepads = [];
 
+var startProgScreen;
+var endProgScreen;
 
 function startGame()
 {
@@ -89,6 +94,25 @@ function preloadAssets()
 	imgPinkGem.src = "media/spr_gui_gem_purple.png";
 	imgGreenGem.onload = preloadUpdate();
 	imgGreenGem.src = "media/spr_gui_gem_verte.png";
+
+	imgStartProg.onload = preloadUpdate();
+	imgStartProg.src = "media/spr_gui_announcer_whatdo.png";
+	imgEndProg.onload = preloadUpdate();
+	imgEndProg.src = "media/spr_gui_announcer_herewego.png";
+
+
+
+	// render splash screens
+	startProgScreen = new createjs.Bitmap(imgStartProg);
+	startProgScreen.x = 0;
+	startProgScreen.y = 0;
+	startProgScreen.visible = false;
+	stage.addChild(startProgScreen);
+	endProgScreen = new createjs.Bitmap(imgEndProg);
+	endProgScreen.x = 0;
+	endProgScreen.y = 0;
+	endProgScreen.visible = false;
+	stage.addChild(endProgScreen);
 
 
 	createjs.Sound.addEventListener("fileload", preloadUpdate);
@@ -196,6 +220,10 @@ function code(e)
 	return(e.keyCode || e.which);
 }
 
+
+freezeDurationInFrames = FPS;
+framesSinceFreeze = 0;
+
 function update(event)
 {
 	// update charachters
@@ -208,8 +236,21 @@ function update(event)
 			player.updateProgramPhase();
 		}
 
-		if (elapsedFrames >= frameBeforeAction)
+		if (elapsedFrames >= frameBeforeAction) // transition to Play phase !
 		{
+			if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
+			{
+				framesSinceFreeze++;
+				console.log("frozen (transition to play)");
+				endProgScreen.visible = true;
+				return;
+			}
+			else
+			{
+				framesSinceFreeze = 0;
+				endProgScreen.visible = false;
+			}
+
 			elapsedFrames = 0;
 			gameState = "playActions";
 
@@ -239,8 +280,21 @@ function update(event)
 			GM.Update();
 
 			currentTurn++;
-			if(currentTurn >= maxActionsToProgram+1)
+			if(currentTurn >= maxActionsToProgram+1)  // transition to Program phase !
 			{
+				if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
+				{
+					framesSinceFreeze++;
+					console.log("frozen (transition to program)");
+					startProgScreen.visible = true;
+					return;
+				}
+				else
+				{
+					framesSinceFreeze = 0;
+					startProgScreen.visible = false;
+				}
+
 				gameState = "programActions";
 				currentTurn = 0;
 
