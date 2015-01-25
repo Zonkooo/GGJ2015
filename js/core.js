@@ -108,7 +108,7 @@ function preloadAssets()
 	imgEmptyGem.onload = preloadUpdate();
 	imgEmptyGem.src = "media/spr_gui_gem_empty.png";
 	imgBlueGem.onload = preloadUpdate();
-	imgBlueGem.src = "media/spr_gui_gem_blue.png";
+	imgBlueGem.src = "media/spr_gui_gem_red.png";
 	imgYellowGem.onload = preloadUpdate();
 	imgYellowGem.src = "media/spr_gui_gem_jaune.png";
 	imgPinkGem.onload = preloadUpdate();
