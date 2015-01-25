@@ -6,13 +6,13 @@ function Board(sprites)
 	blockExtraHeight = 25;
 
 	level = [ // 14 x 7 squares
-	"______________",
-	"___X_______XX_",
-	"_X___XXX_X_XX_",
-	"_XX__X_X_X__X_",
-	"_X___X_X_X____",
-	"_XXX_XXX_XXX__",
-	"______________",
+	"JaadaQKaadadaQ",
+	"WXATQCgbRTQDXW",
+	"YJMXYXWXBJfaRY",
+	"UfdETacaceXJMD",
+	"JbfdQXVXVTcfaR",
+	"WXBgfbeHeXCBXW",
+	"TaffaafafaafaM",
 	];
 
 	texturesPerBlock = [];
@@ -28,16 +28,11 @@ function Board(sprites)
 			for(c in line)
 			{
 				char = line[c];
-				if(char == '_')
+				if(char != 'X')
 				{
 					//build name of stuff
-					l = +l; c = +c; //convert to ints
-					var name = "";
-					name += l > 0 ? level[l-1][c] : "X";
-					name += c < 13 ? level[l][c+1] : "X";
-					name += l < 6 ? level[l+1][c] : "X";
-					name += c > 0 ? level[l][c-1] : "X";
-					var block = new createjs.Sprite(this.textures[char][0], name);
+					var name = char;
+					var block = new createjs.Sprite(this.textures['_'][0], name);
 				}
 				else
 				{

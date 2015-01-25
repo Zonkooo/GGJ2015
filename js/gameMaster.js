@@ -25,38 +25,38 @@ function GameMaster(players)
 			var action = player.programmedActions.pop();
 			if(action)
 			{
-				if(action == LEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] == '_')
+				if(action == LEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] != 'X')
 				{
 					wantedX--;
 				}
-				else if(action == RIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] == '_')
+				else if(action == RIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] != 'X')
 				{
 					wantedX++;
 				}
-				else if(action == UP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] == '_')
+				else if(action == UP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] != 'X')
 				{
 					wantedY--;
 				}
-				else if(action == DOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] == '_')
+				else if(action == DOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] != 'X')
 				{
 					wantedY++;
 				}
-				else if(action == ATTACKLEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] == '_')
+				else if(action == ATTACKLEFT && player.gridPosition.x > 0 && level[player.gridPosition.y][player.gridPosition.x-1] != 'X')
 				{
 					wantedAttackX = player.gridPosition.x - 1;
 					wantedAttackY = player.gridPosition.y;
 				}
-				else if(action == ATTACKRIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] == '_')
+				else if(action == ATTACKRIGHT && player.gridPosition.x < level[0].length-1 && level[player.gridPosition.y][player.gridPosition.x+1] != 'X')
 				{
 					wantedAttackX = player.gridPosition.x + 1;
 					wantedAttackY = player.gridPosition.y;
 				}
-				else if(action == ATTACKUP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] == '_')
+				else if(action == ATTACKUP && player.gridPosition.y > 0 && level[player.gridPosition.y-1][player.gridPosition.x] != 'X')
 				{
 					wantedAttackX = player.gridPosition.x;
 					wantedAttackY = player.gridPosition.y - 1;
 				}
-				else if(action == ATTACKDOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] == '_')
+				else if(action == ATTACKDOWN && player.gridPosition.y < level.length-1 && level[player.gridPosition.y+1][player.gridPosition.x] != 'X')
 				{
 					wantedAttackX = player.gridPosition.x;
 					wantedAttackY = player.gridPosition.y + 1;
