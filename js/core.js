@@ -193,6 +193,8 @@ function launchGame()
 	board.Load();
 
 	var nbPlayers = getParameterByName("nbPlayers");
+	if(nbPlayers != 2 && nbPlayers != 3)
+		nbPlayers = 4;
 
 	var spriteP1 = new createjs.Sprite(getPlayerSpSheet(1), "right");
 	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39, attackup:49, attackdown:50, attackleft:51, attackright:52}, 0));
