@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 26;
+var preloadTotal = 27;
 
 var stage;
 var imgPlayers = [];
@@ -18,6 +18,8 @@ var imgPinkGem = new Image();
 var imgGreenGem = new Image();
 
 var imgBg = new Image();
+
+var imgWin = new Image();
 
 var imgStartProg = new Image();
 var imgEndProg = new Image();
@@ -67,6 +69,9 @@ function preloadAssets()
 
 	imgBg.onload = preloadUpdate();
 	imgBg.src = "media/spr_gui_background.png";
+
+	imgWin.onload = preloadUpdate();
+	imgWin.src = "media/lewin.png";
 
 	createjs.Sound.addEventListener("fileload", preloadUpdate);
 	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
@@ -294,6 +299,11 @@ frozenState = false;
 
 function update(event)
 {
+	if (gameState == "win")
+	{
+		return;
+	}
+
 	for(f in activePool)
 	{
 		var feedback = activePool[f];
@@ -352,7 +362,7 @@ function update(event)
 		}
 
 	}
-	else
+	else if(gameState == "playActions")
 	{
 		var allDone = true;
 		// Update players
@@ -393,17 +403,21 @@ function update(event)
 	}
 
 	// if 3 players dead, reset the game
-	var nbdead = 0;
+	var nbalive = 0;
 	for(p in players)
 	{
 		var player = players[p];
-		if (player.aliveStatus == "dead")
+		if (player.aliveStatus != "dead")
 		{
-			nbdead++;
+			nbalive++;
 		}
 	}
-	if (nbdead >= 3) {
-		resetGame();
+	if (nbalive == 1) {
+		var win = new createjs.Bitmap(imgWin);
+		win.x = 320;
+		win.y = 14;
+		stage.addChild(win);
+		gameState = "win";
 	}
 
 	//update interface
