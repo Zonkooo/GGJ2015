@@ -104,7 +104,7 @@ function GameMaster(players)
 					&& playersWantedPositions[o].y == playersCurrentPositions[p].y)
 				{
 					collided = true;
-					console.log("collision between " + p + " and " + o);
+					//console.log("collision between " + p + " and " + o);
 					playerCollidedWith = otherPlayer;
 					break;
 				}
@@ -113,7 +113,7 @@ function GameMaster(players)
 					&& playersWantedPositions[p].y == playersWantedPositions[o].y)
 				{
 					collided = true;
-					console.log("collision between " + p + " and " + o);
+					//console.log("collision between " + p + " and " + o);
 					playerCollidedWith = otherPlayer;
 					break;
 				}
