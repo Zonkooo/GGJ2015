@@ -193,6 +193,7 @@ function GameMaster(players)
 				ashes.x = player.internalBitmap.x;
 				ashes.y = player.internalBitmap.y;
 
+				stage.removeChild(player.attackBitmap);
 				stage.removeChild(player.internalBitmap);
 				stage.addChild(ashes);
 

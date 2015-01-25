@@ -322,8 +322,8 @@ function update(event)
 					player.attackBitmap.visible = false;
 				}
 
-				GM.killPlayers();
 			}
+			GM.killPlayers();
 		}
 	}
 
