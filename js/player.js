@@ -142,6 +142,16 @@ function Player(bitmap, position, controls, gamepadId)
 			if((!this.prevState[source] && isKeyPressed[source]) || (!this.prevGamePadState[source] && this.gamePadState[source]))
 			{
 				this.programmedActions.push(outcome);
+				if(outcome.indexOf("att") == 0)
+					var feedback = attackPool.pop();
+				else
+					var feedback = movePool.pop();
+				feedback.x = this.internalBitmap.x + 12;
+				feedback.y = this.internalBitmap.y - 70;
+				feedback.alpha = 1;
+				feedback.visible = true;
+				activePool.push(feedback);
+
 				if (this.programmedActions.length < maxActionsToProgram) {
 					createjs.Sound.play(commandSetSound);
 				} else {

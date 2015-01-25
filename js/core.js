@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 23;
+var preloadTotal = 25;
 
 var stage;
 var imgPlayers = [];
@@ -7,6 +7,9 @@ var imgObstacles = [];
 var imgGround = new Image();
 var imgFireball = new Image();
 var imgAshes = new Image();
+
+var imgAttackIcon = new Image();
+var imgMoveIcon = new Image();
 
 var imgEmptyGem = new Image();
 var imgBlueGem = new Image();
@@ -40,6 +43,10 @@ var gamepads = [];
 
 var startProgScreen;
 var endProgScreen;
+
+var movePool = [];
+var attackPool = [];
+var activePool = [];
 
 function startGame()
 {
@@ -100,7 +107,10 @@ function preloadAssets()
 	imgEndProg.onload = preloadUpdate();
 	imgEndProg.src = "media/spr_gui_announcer_herewego.png";
 
-
+	imgMoveIcon.onload = preloadUpdate();
+	imgMoveIcon.src = "media/moveicon.png";
+	imgAttackIcon.onload = preloadUpdate();
+	imgAttackIcon.src = "media/attackicon.png";
 
 	// render splash screens
 	startProgScreen = new createjs.Bitmap(imgStartProg);
@@ -188,6 +198,38 @@ function launchGame()
 	interfaceElement = new Interface();
 	interfaceElement.load();
 
+	//fill pool
+	for(i = 0; i < maxActionsToProgram*4; i++)
+	{
+		var m = new createjs.Bitmap(imgMoveIcon);
+		m.visible = false;
+		stage.addChild(m);
+		movePool.push(m);
+
+		m.myPool = movePool;
+		m.update = function() //pure JS evil
+		{
+			this.y -= 1;
+			this.alpha -= 0.1;
+			if(this.alpha < 0)
+				this.visible = false;
+		}
+
+		var a = new createjs.Bitmap(imgAttackIcon);
+		a.visible = false;
+		stage.addChild(a);
+		attackPool.push(a);
+
+		a.myPool = attackPool;
+		a.update = function()
+		{
+			this.y -= 1;
+			this.alpha -= 0.1;
+			if(this.alpha < 0)
+				this.visible = false;
+		}
+	}
+
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
 
@@ -238,6 +280,23 @@ framesSinceFreeze = 0;
 
 function update(event)
 {
+	for(f in activePool)
+	{
+		var feedback = activePool[f];
+		feedback.update();
+	}
+	//clean active pool
+	for(i = 0; i < activePool.length; i++)
+	{
+		var item = activePool[i];
+		if(item && item.visible == false)
+		{
+			activePool.splice(i, 1);
+			i--;
+			item.myPool.push(item);
+		}
+	}
+
 	// update charachters
 	if (gameState == "programActions")
 	{
