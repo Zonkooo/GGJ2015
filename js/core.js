@@ -407,11 +407,14 @@ function update(event)
 			currentTurn++;
 			if(currentTurn >= maxActionsToProgram+1)  // transition to Program phase !
 			{
-				stage.addChild(startProgScreen);
-				framesRemainingToDisplaySplash = 30;
-
 				gameState = "programActions";
 				currentTurn = 0;
+
+				if (stage.children.indexOf(endProgScreen) != -1) {
+					stage.removeChild(endProgScreen);
+				}
+				stage.addChild(startProgScreen);
+				framesRemainingToDisplaySplash = 30;
 			}
 		}
 	}
