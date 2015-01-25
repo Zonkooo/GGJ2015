@@ -55,7 +55,7 @@ var activePool = [];
 function startGame()
 {
 	stage = new createjs.Stage(document.getElementById("gameCanvas"));
-	var text = new createjs.Text("Loading...");
+	var text = new createjs.Text("Loading...", "20px Arial", "white");
 	text.x = 600; text.y = 350;
 	text.textAlign = "center"; text.textBaseline = "middle";
 	stage.addChild(text);
