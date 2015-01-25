@@ -8,6 +8,7 @@ function GameMaster(players)
 
 		var playersCurrentPositions = [];
 		var playersWantedPositions = [];
+		var playersUpdatedPositions = [];
 		var playersWantedAttacks = [];
 
 		// STEP 1 : intentions
@@ -121,13 +122,17 @@ function GameMaster(players)
 			if (collided == false) // valid move
 			{
 				playersPositions[playersWantedPositions[p].y][playersWantedPositions[p].x] = currentPlayer;
+				playersUpdatedPositions[p] = {x:playersWantedPositions[p].x, y:playersWantedPositions[p].y};
 			}
 			else // cant move : you and the other stay in place
 			{
 				playersPositions[playersCurrentPositions[p].y][playersCurrentPositions[p].x] = currentPlayer;
 				playersPositions[playersCurrentPositions[playerCollidedWith.gamepadId].y][playersCurrentPositions[playerCollidedWith.gamepadId].x] = playerCollidedWith;
 				collisionsDone.push(playerCollidedWith);
-			}
+
+				playersUpdatedPositions[p] = {x:playersWantedPositions[p].x, y:playersWantedPositions[p].y};
+				playersUpdatedPositions[playerCollidedWith.gamepadId] = {x:playersCurrentPositions[playerCollidedWith.gamepadId].x, y:playersCurrentPositions[playerCollidedWith.gamepadId].y}
+			};
 			collisionsDone.push(currentPlayer);
 		}
 
@@ -143,14 +148,14 @@ function GameMaster(players)
 					var otherPlayer = this.players[o];
 					if (currentPlayer == otherPlayer) // dont check collision with yourself
 						continue;
-					if (playersWantedAttacks[p].x == playersWantedPositions[o].x
-						&&  playersWantedAttacks[p].y ==playersWantedPositions[o].y)
+					if (playersWantedAttacks[p].x == playersUpdatedPositions[o].x
+						&&  playersWantedAttacks[p].y ==playersUpdatedPositions[o].y)
 					{
 						// we caught another player with the attack
 						// Check if he counters...
 						if (playersWantedAttacks[o].x != -1
-							&& playersWantedAttacks[o].x == playersWantedPositions[p].x
-						&&  playersWantedAttacks[o].y ==playersWantedPositions[p].y)
+							&& playersWantedAttacks[o].x == playersUpdatedPositions[p].x
+						&&  playersWantedAttacks[o].y ==playersUpdatedPositions[p].y)
 						{
 							currentPlayer.attackBitmap.gotoAndPlay("counter" + currentPlayer.attackBitmap.currentAnimation);
 							console.log("counter !");
