@@ -68,6 +68,7 @@ function GameMaster(players)
 				//Display attack
 				if(action.indexOf("att") == 0)
 				{
+					player.timerAttack = 40;
 					player.attackBitmap.x = player.internalBitmap.x;
 					player.attackBitmap.y = player.internalBitmap.y;
 					player.attackBitmap.gotoAndPlay(toIdle[action]);

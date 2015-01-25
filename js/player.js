@@ -67,6 +67,8 @@ function Player(bitmap, position, controls, gamepadId)
 	this.attackBitmap.visible = false;
 	stage.addChild(this.attackBitmap);
 
+	this.timerAttack = 0;
+
 	//called at each tick of animation phase
 	this.updatePlayPhase = function()
 	{
@@ -77,7 +79,9 @@ function Player(bitmap, position, controls, gamepadId)
 			this.internalBitmap.x += Math.max(Math.min(target.x - this.internalBitmap.x, speed), -speed);
 			this.internalBitmap.y += Math.max(Math.min(target.y - this.internalBitmap.y, speed), -speed);
 
-			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
+			this.timerAttack--;
+
+			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y && this.timerAttack <= 0)
 			{
 				this.animDone = true;
 				this.internalBitmap.gotoAndPlay(toIdle[this.internalBitmap.currentAnimation]);
