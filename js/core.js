@@ -71,7 +71,7 @@ function preloadAssets()
 
 	imgGround.onload = preloadUpdate();
 	imgGround.src = "media/env/roads.png";
-	
+
 	imgFireball.onload = preloadUpdate();
 	imgFireball.src = "media/fireball.png";
 
@@ -132,16 +132,16 @@ function launchGame()
 	board = new Board(sprites);
 	board.Load();
 
-	var spriteP1 = new createjs.Sprite(getPlayerSpSheet(1), "idleright");
+	var spriteP1 = new createjs.Sprite(getPlayerSpSheet(1), "right");
 	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39, attackup:49, attackdown:50, attackleft:51, attackright:52}, 0));
 
-	var spriteP2 = new createjs.Sprite(getPlayerSpSheet(2), "idleleft");
+	var spriteP2 = new createjs.Sprite(getPlayerSpSheet(2), "left");
 	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68, attackup:53, attackdown:54, attackleft:55, attackright:56}, 1));
 
-	var spriteP3 = new createjs.Sprite(getPlayerSpSheet(3), "idleright");
+	var spriteP3 = new createjs.Sprite(getPlayerSpSheet(3), "right");
 	players.push(new Player(spriteP3, {x:0, y:6}, {up:79, down:76, left:75, right:77, attackup:96, attackdown:97, attackleft:98, attackright:99}, 2));
 
-	var spriteP4 = new createjs.Sprite(getPlayerSpSheet(4), "idleleft");
+	var spriteP4 = new createjs.Sprite(getPlayerSpSheet(4), "left");
 	players.push(new Player(spriteP4, {x:13, y:6}, {up:84, down:71, left:70, right:72, attackup:100, attackdown:101, attackleft:102, attackright:103}, 3));
 
 	GM = new GameMaster(players);
@@ -168,15 +168,20 @@ function getPlayerSpSheet(num)
 				images: [imgPlayers[num-1]],
 				frames: {height: 225, width: 225, regX: 75, regY: 75},
 				animations: {
-					down: [0, 3, "down", 0.1],
-					up: [8, 11, "up", 0.1],
-					right: [16, 19, "right", 0.1],
-					left: [24, 27, "left", 0.1],
+					movdown: [0, 3, "down", 0.1],
+					movup: [8, 11, "up", 0.1],
+					movright: [16, 19, "right", 0.1],
+					movleft: [24, 27, "left", 0.1],
 
-					idledown: [4, 5, "idledown", 0.1],
-					idleup: [12, 13, "idleup", 0.1],
-					idleright: [20, 21, "idleright", 0.1],
-					idleleft: [28, 29, "idleleft", 0.1],
+					down: [4, 5, "idledown", 0.1],
+					up: [12, 13, "idleup", 0.1],
+					right: [20, 21, "idleright", 0.1],
+					left: [28, 29, "idleleft", 0.1],
+
+					attdown: [6, 6],
+					attup: [14, 14],
+					attright: [22, 22],
+					attleft: [30, 30],
 				}
 			});
 }

@@ -2,7 +2,7 @@
 
 function Interface()
 {
-	var timer = new createjs.Text("pouet", "50px Courier", "#000000");
+	var timer = new createjs.Text("pouet", "50px Courier", "white");
  	timer.x = 600;
  	timer.y = 20;
 	timer.textAlign = "center";

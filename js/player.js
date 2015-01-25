@@ -1,14 +1,14 @@
 maxActionsToProgram = 5;
 var controlsPad = {up:12, down:13, left:14, right:15, attackup:3, attackdown:0, attackleft:2, attackright:1};
 
-LEFT = "left";
-RIGHT = "right";
-UP = "up";
-DOWN = "down";
-ATTACKLEFT = "attackleft";
-ATTACKRIGHT = "attackright";
-ATTACKUP = "attackup";
-ATTACKDOWN = "attackdown";
+LEFT = "movleft";
+RIGHT = "movright";
+UP = "movup";
+DOWN = "movdown";
+ATTACKLEFT = "attleft";
+ATTACKRIGHT = "attright";
+ATTACKUP = "attup";
+ATTACKDOWN = "attdown";
 
 function Player(bitmap, position, controls, gamepadId)
 {
@@ -50,7 +50,7 @@ function Player(bitmap, position, controls, gamepadId)
 			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
 			{
 				this.animDone = true;
-				this.internalBitmap.gotoAndPlay("idle" + (this.internalBitmap.currentAnimation))
+				this.internalBitmap.gotoAndPlay(this.internalBitmap.currentAnimation.substring(3));
 			}
 
 			var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;
