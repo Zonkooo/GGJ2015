@@ -28,12 +28,22 @@ function Board(sprites)
 	"UaNXSfFHfNXUaM",
 	];
 
+	levels[3] = [
+	"IZZZPXXXXJabdR",
+	"gEXXgPXXGeXXSe",
+	"VXXcccZZdfPXXV",
+	"gZZeXgEHeXgZZe",
+	"VXXTdfZZcdLXXV",
+	"gPXXgFXXSeXXIe",
+	"DUaaMXXXXSZZfL",
+	];
+
 	texturesPerBlock = [];
 	this.textures = sprites;
 
 	this.Load = function()
 	{
-		level = levels[Math.floor(Math.random()*2)];
+		level = levels[Math.floor(Math.random()*levels.length)];
 		for(l in level)
 		{
 			texturesPerBlock.push([]);
