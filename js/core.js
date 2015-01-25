@@ -301,7 +301,11 @@ function update(event)
 {
 	if (gameState == "win")
 	{
-		return;
+		if (isKeyPressed[13]) {
+			location.reload();
+		} else {
+			return;
+		}
 	}
 
 	for(f in activePool)
