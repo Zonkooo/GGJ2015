@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 25;
+var preloadTotal = 29;
 
 var stage;
 var imgPlayers = [];
