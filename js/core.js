@@ -1,11 +1,12 @@
 var preloadCount = 0;
-var preloadTotal = 20;
+var preloadTotal = 21;
 
 var stage;
 var imgPlayers = [];
 var imgObstacles = [];
 var imgGround = new Image();
 var imgFireball = new Image();
+var imgAshes = new Image();
 
 var imgEmptyGem = new Image();
 var imgBlueGem = new Image();
@@ -74,6 +75,9 @@ function preloadAssets()
 
 	imgFireball.onload = preloadUpdate();
 	imgFireball.src = "media/fire.png";
+
+	imgAshes.onload = preloadUpdate();
+	imgAshes.src = "media/ashes.png";
 
 	imgEmptyGem.onload = preloadUpdate();
 	imgEmptyGem.src = "media/spr_gui_gem_empty.png";
@@ -248,7 +252,7 @@ function update(event)
 					player.attackBitmap.visible = false;
 				}
 
-
+				GM.killPlayers();
 			}
 		}
 	}

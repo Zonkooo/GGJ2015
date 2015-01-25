@@ -157,8 +157,6 @@ function GameMaster(players)
 						else // or else he dies
 						{
 							otherPlayer.aliveState = "dead";
-							otherPlayer.internalBitmap.visible = false;
-							stage.removeChild(otherPlayer.internalBitmap);
 						}
 					}
 				}
@@ -175,5 +173,25 @@ function GameMaster(players)
 				player.gridPosition.x = +x;
 				player.gridPosition.y = +y;
 			}
+	}
+
+	this.killPlayers = function()
+	{
+		for(i = 0; i < 4; i++)
+		{
+			var player = players[i];
+			if(player && player.aliveState == "dead")
+			{
+				var ashes = new createjs.Bitmap(imgAshes);
+				ashes.x = player.internalBitmap.x;
+				ashes.y = player.internalBitmap.y;
+
+				stage.removeChild(player.internalBitmap);
+				stage.addChild(ashes);
+
+				players.splice(i, 1);
+				i--; //so evil
+			}
+		}
 	}
 }
