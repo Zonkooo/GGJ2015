@@ -78,7 +78,13 @@ function preloadAssets()
 	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_sucess.mp3", attackHitSound, 4);
-	createjs.Sound.registerSound("media/sound/mus_loop.ogg", soundtrackSound, 1);
+
+	if (!!window.chrome) { // running on chrome
+		createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, 1);
+	}
+	else {
+		createjs.Sound.registerSound("media/sound/mus_loop.ogg", soundtrackSound, 1);
+	}
 
 	for(i = 1; i <= 4; i++)
 	{
