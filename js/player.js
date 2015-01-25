@@ -84,6 +84,7 @@ function Player(bitmap, position, controls, gamepadId)
 			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y && this.timerAttack <= 0)
 			{
 				this.animDone = true;
+				this.attackBitmap.visible = false;
 				this.internalBitmap.gotoAndPlay(toIdle[this.internalBitmap.currentAnimation]);
 			}
 

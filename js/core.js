@@ -313,15 +313,6 @@ function update(event)
 
 				gameState = "programActions";
 				currentTurn = 0;
-
-				// Set all players attack to invisible for prog phase
-				// TODO : this should be done properly
-				for(p in players)
-				{
-					var player = players[p];
-					player.attackBitmap.visible = false;
-				}
-
 			}
 			GM.killPlayers();
 		}
