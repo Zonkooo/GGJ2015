@@ -354,6 +354,7 @@ function update(event)
 
 		if(allDone)
 		{
+			GM.killPlayers();
 			GM.Update();
 
 			currentTurn++;
@@ -377,7 +378,6 @@ function update(event)
 				gameState = "programActions";
 				currentTurn = 0;
 			}
-			GM.killPlayers();
 		}
 	}
 
