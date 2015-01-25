@@ -19,7 +19,7 @@ var imgGreenGem = new Image();
 
 var imgBg = new Image();
 
-var imgWin = new Image();
+var imgWin = [];
 
 var imgStartProg = new Image();
 var imgEndProg = new Image();
@@ -86,6 +86,14 @@ function preloadAssets()
 		player.onload = preloadUpdate();
 		player.src = "media/gozilla_spritesheet" + i + ".png";
 		imgPlayers.push(player);
+	}
+
+	for(i = 1; i <= 4; i++)
+	{
+		var win = new Image();
+		win.onload = preloadUpdate();
+		win.src = "media/victory" + i + ".png";
+		imgWin.push(win);
 	}
 
 	for(i = 1; i <= 4; i++)
@@ -315,6 +323,8 @@ function update(event)
 		if (isKeyPressed[32]) {
 			location.reload();
 		} else {
+			// Update main scene
+			stage.update();
 			return;
 		}
 	}
@@ -418,17 +428,15 @@ function update(event)
 	}
 
 	// if 3 players dead, reset the game
-	var nbalive = 0;
-	for(p in players)
-	{
-		var player = players[p];
-		if (player.aliveStatus != "dead")
-		{
-			nbalive++;
-		}
-	}
-	if (nbalive == 1) {
-		var win = new createjs.Bitmap(imgWin);
+	if(players.length == 1) {
+		var winSp = new createjs.SpriteSheet({
+					images: [imgWin[players[0].gamepadId]],
+					frames: {height: 700, width: 560},
+					animations: {
+						win: [0, 1, "win", 0.05],
+					}
+				});
+		var win = new createjs.Sprite(winSp, "win");
 		win.x = 320;
 		win.y = 0;
 		stage.addChild(win);
