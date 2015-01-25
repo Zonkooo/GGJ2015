@@ -10,6 +10,8 @@ ATTACKRIGHT = "attright";
 ATTACKUP = "attup";
 ATTACKDOWN = "attdown";
 
+var verticalOffSet = -20;
+
 function Player(bitmap, position, controls, gamepadId)
 {
 	var speed = 3;
@@ -24,7 +26,8 @@ function Player(bitmap, position, controls, gamepadId)
 	this.aliveState = "alive";
 
 	this.internalBitmap.x = gridInitX + position.x*blockSize;
-	this.internalBitmap.y = gridInitY + position.y*blockSize;
+	this.internalBitmap.y = gridInitY + position.y*blockSize + verticalOffSet;
+
 
 	this.programmedActions = [];
 	this.animDone = true;
@@ -42,7 +45,7 @@ function Player(bitmap, position, controls, gamepadId)
 	{
 		if(!this.animDone)
 		{
-			var target = {x:gridInitX + this.gridPosition.x*blockSize, y:gridInitY + this.gridPosition.y*blockSize};
+			var target = {x:gridInitX + this.gridPosition.x*blockSize, y:gridInitY + this.gridPosition.y*blockSize + verticalOffSet};
 
 			this.internalBitmap.x += Math.max(Math.min(target.x - this.internalBitmap.x, speed), -speed);
 			this.internalBitmap.y += Math.max(Math.min(target.y - this.internalBitmap.y, speed), -speed);
