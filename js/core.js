@@ -78,7 +78,7 @@ function preloadAssets()
 	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_sucess.mp3", attackHitSound, 4);
-	createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, 1);
+	createjs.Sound.registerSound("media/sound/mus_loop.ogg", soundtrackSound, 1);
 
 	for(i = 1; i <= 4; i++)
 	{
@@ -370,8 +370,8 @@ function update(event)
 			for(p in players)
 			{
 				var player = players[p];
-				if(player.programmedActions.length > 0)
-					console.log(p + " at " + player.gridPosition.x + "," + player.gridPosition.y + " does " + player.programmedActions);
+				/*if(player.programmedActions.length > 0)
+					console.log(p + " at " + player.gridPosition.x + "," + player.gridPosition.y + " does " + player.programmedActions);*/
 				player.programmedActions.reverse();
 			}
 		}
