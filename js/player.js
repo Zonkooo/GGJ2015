@@ -91,6 +91,7 @@ function Player(bitmap, position, controls, gamepadId)
 			var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;
 			var dy = target.y - this.internalBitmap.y < 0 ? 1 : 0;
 			var redrawJustBefore = texturesPerBlock[this.gridPosition.y + dy][this.gridPosition.x + dx];
+
 			stage.removeChild(this.internalBitmap);
 			var index = stage.getChildIndex(redrawJustBefore);
 			stage.addChildAt(this.internalBitmap, index+1);
@@ -142,7 +143,7 @@ function Player(bitmap, position, controls, gamepadId)
 			if((!this.prevState[source] && isKeyPressed[source]) || (!this.prevGamePadState[source] && this.gamePadState[source]))
 			{
 				this.programmedActions.push(outcome);
-				if(outcome.indexOf("att") == 0)
+				if(outcome.indexOf("att") == 0) 
 					var feedback = attackPool.pop();
 				else
 					var feedback = movePool.pop();

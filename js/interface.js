@@ -79,7 +79,7 @@ function Interface()
 		}
 
 		// update timer
-		var remaining = ((frameBeforeAction - elapsedFrames) / FPS).toFixed(2);
+		var remaining = ((frameBeforeAction - elapsedFramesProg) / FPS).toFixed(2);
 		if (remaining == "5.00")
 		{
 			timer.text = "GO!";

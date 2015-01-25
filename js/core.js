@@ -39,7 +39,7 @@ var isKeyPressed = [];
 FPS = 60;
 var secondsBeforeAction = 5;
 var frameBeforeAction = FPS * secondsBeforeAction;
-var elapsedFrames = 0;
+var elapsedFramesProg = 0;
 var currentTurn = 0;
 var gameState = "programActions";
 
@@ -311,10 +311,7 @@ function code(e)
 	return(e.keyCode || e.which);
 }
 
-
-freezeDurationInFrames = FPS;
-framesSinceFreeze = 0;
-frozenState = false;
+framesRemainingToDisplaySplash = 30;
 
 function update(event)
 {
@@ -346,42 +343,36 @@ function update(event)
 		}
 	}
 
-	// update charachters
+	// update characters
 	if (gameState == "programActions")
 	{
-		elapsedFrames++;
+		if (framesRemainingToDisplaySplash > 0)
+		{
+			framesRemainingToDisplaySplash--;
+		}
+		else
+		{
+			stage.removeChild(startProgScreen);
+		}
+
+		elapsedFramesProg++;
 		for(p in players)
 		{
 			var player = players[p];
 			player.updateProgramPhase();
 		}
 
-		if (elapsedFrames >= frameBeforeAction) // transition to Play phase !
+		if (elapsedFramesProg >= frameBeforeAction) // transition to Play phase !
 		{
-
-			/*if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
-			{
-				if (framesSinceFreeze == 0) {
-					stage.addChild(endProgScreen);
-				}
-				framesSinceFreeze++;
-				stage.update();
-				return;
-			}
-			else
-			{
-				framesSinceFreeze = 0;
-				stage.removeChild(endProgScreen);
-			}*/
-
-			elapsedFrames = 0;
+			elapsedFramesProg = 0;
 			gameState = "playActions";
+
+			stage.addChild(endProgScreen);
+			framesRemainingToDisplaySplash = 30;
 
 			for(p in players)
 			{
 				var player = players[p];
-				/*if(player.programmedActions.length > 0)
-					console.log(p + " at " + player.gridPosition.x + "," + player.gridPosition.y + " does " + player.programmedActions);*/
 				player.programmedActions.reverse();
 			}
 		}
@@ -389,6 +380,16 @@ function update(event)
 	}
 	else if(gameState == "playActions")
 	{
+		if (framesRemainingToDisplaySplash > 0)
+		{
+			framesRemainingToDisplaySplash--;
+		}
+		else
+		{
+			stage.removeChild(endProgScreen);
+		}
+
+
 		var allDone = true;
 		// Update players
 		for(p in players)
@@ -406,20 +407,8 @@ function update(event)
 			currentTurn++;
 			if(currentTurn >= maxActionsToProgram+1)  // transition to Program phase !
 			{
-				/*if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
-				{
-					if (framesSinceFreeze == 0) {
-						stage.addChild(startProgScreen);
-					}
-					framesSinceFreeze++;
-					stage.update();
-					return;
-				}
-				else
-				{
-					framesSinceFreeze = 0;
-					stage.removeChild(startProgScreen);
-				}*/
+				stage.addChild(startProgScreen);
+				framesRemainingToDisplaySplash = 30;
 
 				gameState = "programActions";
 				currentTurn = 0;
@@ -449,14 +438,6 @@ function update(event)
 	// Update main scene
 	stage.update();
 }
-
-function resetGame()
-{
-	// clear everything, relaunch the game (on a new stage ?)
-	//TODO
-}
-
-
 
 /////////////////// Gamepad support //////////////
 ticking = false;
