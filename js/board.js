@@ -1,7 +1,7 @@
 function Board(sprites)
 {
 	gridInitX = 75;
-	gridInitY = 88;
+	gridInitY = 90;
 	blockSize = 75;
 	blockExtraHeight = 25;
 
