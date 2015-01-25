@@ -2,7 +2,7 @@ function Interface()
 {
 	var timer = new createjs.Text("pouet", "50px Courier", "white");
  	timer.x = 600;
- 	timer.y = 20;
+ 	timer.y = 15;
 	timer.textAlign = "center";
  	stage.addChildAt(timer, 0);
 
