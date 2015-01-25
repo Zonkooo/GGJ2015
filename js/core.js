@@ -104,15 +104,11 @@ function preloadAssets()
 
 	// render splash screens
 	startProgScreen = new createjs.Bitmap(imgStartProg);
-	startProgScreen.x = 0;
-	startProgScreen.y = 0;
-	startProgScreen.visible = false;
-	stage.addChild(startProgScreen);
+	startProgScreen.x = 400;
+	startProgScreen.y = 200;
 	endProgScreen = new createjs.Bitmap(imgEndProg);
-	endProgScreen.x = 0;
-	endProgScreen.y = 0;
-	endProgScreen.visible = false;
-	stage.addChild(endProgScreen);
+	endProgScreen.x = 400;
+	endProgScreen.y = 200;
 
 
 	createjs.Sound.addEventListener("fileload", preloadUpdate);
@@ -242,13 +238,14 @@ function update(event)
 			{
 				framesSinceFreeze++;
 				console.log("frozen (transition to play)");
-				endProgScreen.visible = true;
+				stage.addChild(endProgScreen);
+				stage.update();
 				return;
 			}
 			else
 			{
 				framesSinceFreeze = 0;
-				endProgScreen.visible = false;
+				stage.removeChild(endProgScreen);
 			}
 
 			elapsedFrames = 0;
@@ -286,13 +283,14 @@ function update(event)
 				{
 					framesSinceFreeze++;
 					console.log("frozen (transition to program)");
-					startProgScreen.visible = true;
+					stage.addChild(startProgScreen);
+					stage.update();
 					return;
 				}
 				else
 				{
 					framesSinceFreeze = 0;
-					startProgScreen.visible = false;
+					stage.removeChild(startProgScreen);
 				}
 
 				gameState = "programActions";
