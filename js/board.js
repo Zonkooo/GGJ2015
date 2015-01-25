@@ -5,7 +5,10 @@ function Board(sprites)
 	blockSize = 75;
 	blockExtraHeight = 25;
 
-	level2 = [ // 14 x 7 squares
+	level = [];
+	levels = [];
+
+	levels[1] = [ // 14 x 7 squares
 	"JaadaQKaadadaQ",
 	"WXATQCgbRTQDXW",
 	"YJMXYXWXBJfaRY",
@@ -15,7 +18,7 @@ function Board(sprites)
 	"TaffaafafaafaM",
 	];
 
-	level3 = [ // 14 x 7 squares
+	levels[0] = [ // 14 x 7 squares
 	"JaRXJabZdRXIZE",
 	"TRgEYBXXDgZeKF",
 	"XSeXSfddZLXgLX",
@@ -25,21 +28,12 @@ function Board(sprites)
 	"UaNXSfFHfNXUaM",
 	];
 
-	level = [ // 14 x 7 squares
-	"IZZZPXXXXccccc",
-	"gEXXgPXXGcXXcc",
-	"VXXcccdddfcXXc",
-	"gZZeXgcceXgccc",
-	"VXXTdfffcdcXXc",
-	"gPXXgFXXccXXcc",
-	"DUaaMXXXXccccc",
-	];
-
 	texturesPerBlock = [];
 	this.textures = sprites;
 
 	this.Load = function()
 	{
+		level = levels[Math.floor(Math.random()*2)];
 		for(l in level)
 		{
 			texturesPerBlock.push([]);

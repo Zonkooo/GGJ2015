@@ -5,7 +5,6 @@ function GameMaster(players)
 	this.Update = function()
 	{
 		var playersPositions = [[],[],[],[],[],[],[],]; //2D array mofo
-		//var ashesPositions = [[],[],[],[],[],[],[],];
 
 		var playersCurrentPositions = [];
 		var playersWantedPositions = [];
@@ -200,30 +199,10 @@ function GameMaster(players)
 
 				stage.removeChild(player.attackBitmap);
 				stage.removeChild(player.internalBitmap);
-				stage.addChildAt(ashes);
-
-				//ashesPositions[ashes.y][ashes.x] = ashes;
+				stage.addChild(ashes);
 
 				players.splice(i, 1);
 				i--; //so evil
-
-				/*var minPlayerImgIndexInStage = 100;
-				for(p in this.players)
-				{
-					var currentPlayer = this.players[p];
-					var index = stage.children.indexOf(currentPlayer.internalBitmap);
-					console.log(index);
-					if (minPlayerImgIndexInStage > index) {
-						minPlayerImgIndexInStage = index;
-					}
-
-				}
-				console.log("----");
-				console.log(minPlayerImgIndexInStage);
-				console.log("----");
-				stage.addChildAt(ashes, minPlayerImgIndexInStage);*/
-
-
 			}
 		}
 	}

@@ -15,7 +15,7 @@ var img4p = new Image();
 function startGame()
 {
 	stage = new createjs.Stage(document.getElementById("gameCanvas"));
-	var text = new createjs.Text("Loading...");
+	var text = new createjs.Text("Loading...", "20px Arial", "white");
 	text.x = 600; text.y = 350;
 	text.textAlign = "center"; text.textBaseline = "middle";
 	stage.addChild(text);
@@ -30,11 +30,11 @@ function preloadAssets()
 	imgBg.src = "media/menubg.png";
 
 	img2p.onload = preloadUpdate();
-	img2p.src = "media/spr_gui_gem_jaune.png";
+	img2p.src = "media/spr_menu_2.png";
 	img3p.onload = preloadUpdate();
-	img3p.src = "media/spr_gui_gem_purple.png";
+	img3p.src = "media/spr_menu_3.png";
 	img4p.onload = preloadUpdate();
-	img4p.src = "media/spr_gui_gem_red.png";
+	img4p.src = "media/spr_menu_4.png";
 
 	createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, 1);
 }

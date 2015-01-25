@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 25;
+var preloadTotal = 29;
 
 var stage;
 var imgPlayers = [];
@@ -19,7 +19,7 @@ var imgGreenGem = new Image();
 
 var imgBg = new Image();
 
-var imgWin = new Image();
+var imgWin = [];
 
 var imgStartProg = new Image();
 var imgEndProg = new Image();
@@ -39,7 +39,7 @@ var isKeyPressed = [];
 FPS = 60;
 var secondsBeforeAction = 5;
 var frameBeforeAction = FPS * secondsBeforeAction;
-var elapsedFrames = 0;
+var elapsedFramesProg = 0;
 var currentTurn = 0;
 var gameState = "programActions";
 
@@ -55,7 +55,7 @@ var activePool = [];
 function startGame()
 {
 	stage = new createjs.Stage(document.getElementById("gameCanvas"));
-	var text = new createjs.Text("Loading...");
+	var text = new createjs.Text("Loading...", "20px Arial", "white");
 	text.x = 600; text.y = 350;
 	text.textAlign = "center"; text.textBaseline = "middle";
 	stage.addChild(text);
@@ -78,7 +78,13 @@ function preloadAssets()
 	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_sucess.mp3", attackHitSound, 4);
-	createjs.Sound.registerSound("media/sound/mus_loop.ogg", soundtrackSound, 1);
+
+	if (!!window.chrome) { // running on chrome
+		createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, 1);
+	}
+	else {
+		createjs.Sound.registerSound("media/sound/mus_loop.ogg", soundtrackSound, 1);
+	}
 
 	for(i = 1; i <= 4; i++)
 	{
@@ -86,6 +92,14 @@ function preloadAssets()
 		player.onload = preloadUpdate();
 		player.src = "media/gozilla_spritesheet" + i + ".png";
 		imgPlayers.push(player);
+	}
+
+	for(i = 1; i <= 4; i++)
+	{
+		var win = new Image();
+		win.onload = preloadUpdate();
+		win.src = "media/victory" + i + ".png";
+		imgWin.push(win);
 	}
 
 	for(i = 1; i <= 4; i++)
@@ -303,10 +317,7 @@ function code(e)
 	return(e.keyCode || e.which);
 }
 
-
-freezeDurationInFrames = FPS;
-framesSinceFreeze = 0;
-frozenState = false;
+framesRemainingToDisplaySplash = 30;
 
 function update(event)
 {
@@ -315,6 +326,8 @@ function update(event)
 		if (isKeyPressed[32]) {
 			location.reload();
 		} else {
+			// Update main scene
+			stage.update();
 			return;
 		}
 	}
@@ -336,42 +349,36 @@ function update(event)
 		}
 	}
 
-	// update charachters
+	// update characters
 	if (gameState == "programActions")
 	{
-		elapsedFrames++;
+		if (framesRemainingToDisplaySplash > 0)
+		{
+			framesRemainingToDisplaySplash--;
+		}
+		else
+		{
+			stage.removeChild(startProgScreen);
+		}
+
+		elapsedFramesProg++;
 		for(p in players)
 		{
 			var player = players[p];
 			player.updateProgramPhase();
 		}
 
-		if (elapsedFrames >= frameBeforeAction) // transition to Play phase !
+		if (elapsedFramesProg >= frameBeforeAction) // transition to Play phase !
 		{
-
-			/*if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
-			{
-				if (framesSinceFreeze == 0) {
-					stage.addChild(endProgScreen);
-				}
-				framesSinceFreeze++;
-				stage.update();
-				return;
-			}
-			else
-			{
-				framesSinceFreeze = 0;
-				stage.removeChild(endProgScreen);
-			}*/
-
-			elapsedFrames = 0;
+			elapsedFramesProg = 0;
 			gameState = "playActions";
+
+			stage.addChild(endProgScreen);
+			framesRemainingToDisplaySplash = 30;
 
 			for(p in players)
 			{
 				var player = players[p];
-				/*if(player.programmedActions.length > 0)
-					console.log(p + " at " + player.gridPosition.x + "," + player.gridPosition.y + " does " + player.programmedActions);*/
 				player.programmedActions.reverse();
 			}
 		}
@@ -379,6 +386,16 @@ function update(event)
 	}
 	else if(gameState == "playActions")
 	{
+		if (framesRemainingToDisplaySplash > 0)
+		{
+			framesRemainingToDisplaySplash--;
+		}
+		else
+		{
+			stage.removeChild(endProgScreen);
+		}
+
+
 		var allDone = true;
 		// Update players
 		for(p in players)
@@ -396,39 +413,28 @@ function update(event)
 			currentTurn++;
 			if(currentTurn >= maxActionsToProgram+1)  // transition to Program phase !
 			{
-				/*if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
-				{
-					if (framesSinceFreeze == 0) {
-						stage.addChild(startProgScreen);
-					}
-					framesSinceFreeze++;
-					stage.update();
-					return;
-				}
-				else
-				{
-					framesSinceFreeze = 0;
-					stage.removeChild(startProgScreen);
-				}*/
-
 				gameState = "programActions";
 				currentTurn = 0;
+
+				if (stage.children.indexOf(endProgScreen) != -1) {
+					stage.removeChild(endProgScreen);
+				}
+				stage.addChild(startProgScreen);
+				framesRemainingToDisplaySplash = 30;
 			}
 		}
 	}
 
 	// if 3 players dead, reset the game
-	var nbalive = 0;
-	for(p in players)
-	{
-		var player = players[p];
-		if (player.aliveStatus != "dead")
-		{
-			nbalive++;
-		}
-	}
-	if (nbalive == 1) {
-		var win = new createjs.Bitmap(imgWin);
+	if(players.length == 1) {
+		var winSp = new createjs.SpriteSheet({
+					images: [imgWin[players[0].gamepadId]],
+					frames: {height: 700, width: 560},
+					animations: {
+						win: [0, 1, "win", 0.05],
+					}
+				});
+		var win = new createjs.Sprite(winSp, "win");
 		win.x = 320;
 		win.y = 0;
 		stage.addChild(win);
@@ -441,14 +447,6 @@ function update(event)
 	// Update main scene
 	stage.update();
 }
-
-function resetGame()
-{
-	// clear everything, relaunch the game (on a new stage ?)
-	//TODO
-}
-
-
 
 /////////////////// Gamepad support //////////////
 ticking = false;
