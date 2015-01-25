@@ -165,6 +165,11 @@ function GameMaster(players)
 						{
 							otherPlayer.aliveState = "dead";
 						}
+						createjs.Sound.play(attackHitSound);
+					}
+					else
+					{
+						createjs.Sound.play(attackMissSound);
 					}
 				}
 			}

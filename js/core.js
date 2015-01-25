@@ -24,6 +24,8 @@ var imgEndProg = new Image();
 
 var commandSetSound = "commandSet";
 var commandCompleteSound = "commandComplete";
+var attackHitSound = "attackHit";
+var attackMissSound = "attackMiss";
 //var soundtrackSound = "soundtrack";
 
 var players = [];
@@ -124,6 +126,8 @@ function preloadAssets()
 	createjs.Sound.addEventListener("fileload", preloadUpdate);
 	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
 	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
+	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
+	createjs.Sound.registerSound("media/sound/sfx_attack_sucess.mp3", attackHitSound, 4);
 	//createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, maxActionsToProgram*4);
 }
 
