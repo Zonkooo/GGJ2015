@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 4;
+var preloadTotal = 5;
 
 var stage;
 var isKeyPressed = [];
@@ -7,6 +7,7 @@ FPS = 60;
 var gamepads = [];
 
 var imgBg = new Image();
+var imgCred = new Image();
 
 var img2p = new Image();
 var img3p = new Image();
@@ -28,6 +29,9 @@ function preloadAssets()
 {
 	imgBg.onload = preloadUpdate();
 	imgBg.src = "media/menubg.png";
+
+	imgCred.onload = preloadUpdate();
+	imgCred.src = "media/spr_menu_credits.png";
 
 	img2p.onload = preloadUpdate();
 	img2p.src = "media/spr_menu_2.png";
@@ -52,6 +56,12 @@ function launchGame()
 
 	var bg = new createjs.Bitmap(imgBg);
 	stage.addChild(bg);
+
+	var cred = new createjs.Bitmap(imgCred);
+	cred.addEventListener("click", function(event) { location = "credits.html"; })
+	cred.x = 700;
+	cred.y = 200;
+	stage.addChild(cred);
 
 	var btn2p = new createjs.Bitmap(img2p);
 	btn2p.addEventListener("click", function(event) { gotoGame(2); })
