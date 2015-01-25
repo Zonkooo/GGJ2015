@@ -352,15 +352,6 @@ function update(event)
 	// update characters
 	if (gameState == "programActions")
 	{
-		if (framesRemainingToDisplaySplash > 0)
-		{
-			framesRemainingToDisplaySplash--;
-		}
-		else
-		{
-			stage.removeChild(startProgScreen);
-		}
-
 		elapsedFramesProg++;
 		for(p in players)
 		{
@@ -419,8 +410,6 @@ function update(event)
 				if (stage.children.indexOf(endProgScreen) != -1) {
 					stage.removeChild(endProgScreen);
 				}
-				stage.addChild(startProgScreen);
-				framesRemainingToDisplaySplash = 30;
 			}
 		}
 	}
