@@ -230,7 +230,7 @@ function launchGame()
 		m.update = function() //pure JS evil
 		{
 			this.y -= 1;
-			this.alpha -= 0.1;
+			this.alpha -= 0.05;
 			if(this.alpha < 0)
 				this.visible = false;
 		}
@@ -244,7 +244,7 @@ function launchGame()
 		a.update = function()
 		{
 			this.y -= 1;
-			this.alpha -= 0.1;
+			this.alpha -= 0.05;
 			if(this.alpha < 0)
 				this.visible = false;
 		}
