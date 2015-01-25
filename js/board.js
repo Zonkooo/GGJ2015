@@ -28,7 +28,7 @@ function Board(sprites)
 	"UaNXSfFHfNXUaM",
 	];
 
-	levels[3] = [
+	levels[2] = [
 	"IZZZPXXXXJabdR",
 	"gEXXgPXXGeXXSe",
 	"VXXcccZZdfPXXV",
