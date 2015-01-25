@@ -252,9 +252,10 @@ function update(event)
 		{
 			if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
 			{
+				if (framesSinceFreeze == 0) {
+					stage.addChild(endProgScreen);
+				}
 				framesSinceFreeze++;
-				console.log("frozen (transition to play)");
-				stage.addChild(endProgScreen);
 				stage.update();
 				return;
 			}
@@ -297,9 +298,10 @@ function update(event)
 			{
 				if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
 				{
+					if (framesSinceFreeze == 0) {
+						stage.addChild(startProgScreen);
+					}
 					framesSinceFreeze++;
-					console.log("frozen (transition to program)");
-					stage.addChild(startProgScreen);
 					stage.update();
 					return;
 				}
