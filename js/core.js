@@ -1,9 +1,9 @@
 var preloadCount = 0;
-var preloadTotal = 27;
+var preloadTotal = 25;
 
 var stage;
 var imgPlayers = [];
-var imgObstacles = [];
+var buildingSprites = [];
 var imgGround = new Image();
 var imgFireball = new Image();
 var imgAshes = new Image();
@@ -88,12 +88,21 @@ function preloadAssets()
 		imgPlayers.push(player);
 	}
 
-	for(i = 1; i <= 6; i++)
+	for(i = 1; i <= 4; i++)
 	{
-		var obstacles = new Image();
-		obstacles.onload = preloadUpdate();
-		obstacles.src = "media/env/bdg" + i + ".png";
-		imgObstacles.push(obstacles);
+		var building = new Image();
+		building.onload = preloadUpdate();
+		building.src = "media/env/building" + i + ".png";
+
+		var spriteBuilding = new createjs.SpriteSheet({
+				images: [building],
+				frames: {height: 100, width: 75},
+				animations: {
+					idle: [0, 2, "idle", 0.01 * i]
+				}
+			});
+		buildingSprites.push(spriteBuilding);
+
 	}
 
 	imgGround.onload = preloadUpdate();
@@ -149,7 +158,7 @@ function launchGame()
 	initGamepad();
 
 	var sprites = [];
-	sprites['X'] = imgObstacles;
+	sprites['X'] = buildingSprites;
 
 	var groundSheet = new createjs.SpriteSheet({
 			images: [imgGround],

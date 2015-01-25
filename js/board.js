@@ -36,8 +36,7 @@ function Board(sprites)
 				}
 				else
 				{
-					var candidates = this.textures[char];
-					var block = new createjs.Bitmap(candidates[Math.floor(Math.random() * candidates.length)]);
+					var block = new createjs.Sprite(buildingSprites[Math.floor(Math.random() * buildingSprites.length)], "idle");
 				}
 				block.regY = blockExtraHeight;
 				block.x = c*blockSize + gridInitX;
