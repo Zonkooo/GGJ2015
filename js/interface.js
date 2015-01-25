@@ -40,7 +40,7 @@ function Interface()
 		stage.addChildAt(bg, 0);
 
 		//play ost
-		//createjs.Sound.play(soundtrackSound);
+		createjs.Sound.play(soundtrackSound);
  	}
 
 

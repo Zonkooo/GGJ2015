@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 25;
+var preloadTotal = 26;
 
 var stage;
 var imgPlayers = [];
@@ -26,7 +26,7 @@ var commandSetSound = "commandSet";
 var commandCompleteSound = "commandComplete";
 var attackHitSound = "attackHit";
 var attackMissSound = "attackMiss";
-//var soundtrackSound = "soundtrack";
+var soundtrackSound = "soundtrack";
 
 var players = [];
 var GM;
@@ -67,6 +67,13 @@ function preloadAssets()
 
 	imgBg.onload = preloadUpdate();
 	imgBg.src = "media/spr_gui_background.png";
+
+	createjs.Sound.addEventListener("fileload", preloadUpdate);
+	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
+	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
+	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
+	createjs.Sound.registerSound("media/sound/sfx_attack_sucess.mp3", attackHitSound, 4);
+	createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, 1);
 
 	for(i = 1; i <= 4; i++)
 	{
@@ -123,12 +130,6 @@ function preloadAssets()
 	endProgScreen.y = 150;
 
 
-	createjs.Sound.addEventListener("fileload", preloadUpdate);
-	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
-	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
-	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
-	createjs.Sound.registerSound("media/sound/sfx_attack_sucess.mp3", attackHitSound, 4);
-	//createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, maxActionsToProgram*4);
 }
 
 function preloadUpdate()
@@ -289,6 +290,7 @@ function code(e)
 
 freezeDurationInFrames = FPS;
 framesSinceFreeze = 0;
+frozenState = false;
 
 function update(event)
 {
@@ -321,7 +323,8 @@ function update(event)
 
 		if (elapsedFrames >= frameBeforeAction) // transition to Play phase !
 		{
-			if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
+
+			/*if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
 			{
 				if (framesSinceFreeze == 0) {
 					stage.addChild(endProgScreen);
@@ -334,7 +337,7 @@ function update(event)
 			{
 				framesSinceFreeze = 0;
 				stage.removeChild(endProgScreen);
-			}
+			}*/
 
 			elapsedFrames = 0;
 			gameState = "playActions";
@@ -368,7 +371,7 @@ function update(event)
 			currentTurn++;
 			if(currentTurn >= maxActionsToProgram+1)  // transition to Program phase !
 			{
-				if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
+				/*if (framesSinceFreeze <= freezeDurationInFrames) // freeze the update while we display the splash
 				{
 					if (framesSinceFreeze == 0) {
 						stage.addChild(startProgScreen);
@@ -381,7 +384,7 @@ function update(event)
 				{
 					framesSinceFreeze = 0;
 					stage.removeChild(startProgScreen);
-				}
+				}*/
 
 				gameState = "programActions";
 				currentTurn = 0;
