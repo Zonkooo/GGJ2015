@@ -54,9 +54,13 @@ function Player(bitmap, position, controls, gamepadId)
 			frames: {height: 225, width: 225, regX: 75, regY: 75},
 			animations: {
 				down: [0, 0],
-				up: [1, 1],
-				right: [2, 2],
-				left: [3, 3],
+				up: [2, 2],
+				right: [4, 4],
+				left: [6, 6],
+				counterdown: [1, 1],
+				counterup: [3, 3],
+				counterright: [5, 5],
+				counterleft: [7, 7],
 			}
 		});
 	this.attackBitmap = new createjs.Sprite(attackSpSheet);

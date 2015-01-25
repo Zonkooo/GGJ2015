@@ -152,6 +152,7 @@ function GameMaster(players)
 							&& playersWantedAttacks[o].x == playersWantedPositions[p].x
 						&&  playersWantedAttacks[o].y ==playersWantedPositions[p].y)
 						{
+							currentPlayer.attackBitmap.gotoAndPlay("counter" + currentPlayer.attackBitmap.currentAnimation);
 							console.log("counter !");
 						}
 						else // or else he dies
