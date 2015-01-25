@@ -25,7 +25,6 @@ function Interface()
 
 		for (playerIndex = 0; playerIndex < players.length ; ++playerIndex)
 		{
-		    var pos = this.positions[playerIndex];
 			this.uiElements.push([]);
 			for (index = 0; index < maxActionsToProgram ; ++index)
 			{
@@ -47,16 +46,16 @@ function Interface()
 	this.updateState = function()
 	{
 		// update players action
-		var playerIndex;
-		for (playerIndex = 0; playerIndex < players.length ; ++playerIndex)
+		for (p in players)
 		{
+			var playerIndex = players[p].gamepadId;
 		    var pos = this.positions[playerIndex];
 
 			for (index = 0; index < maxActionsToProgram ; ++index)
 			{
-				var drawfull = index < players[playerIndex].programmedActions.length;
+				var drawfull = index < players[p].programmedActions.length;
 			    if(gameState == "playActions")
-			    	drawfull = index > maxActionsToProgram - players[playerIndex].programmedActions.length - 1;
+			    	drawfull = index > maxActionsToProgram - players[p].programmedActions.length - 1;
 
 				if (drawfull) {
 					if (playerIndex == 0) {
