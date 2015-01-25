@@ -96,10 +96,10 @@ function GameMaster(players)
 				if (currentPlayer == otherPlayer || otherPlayer.aliveState == "dead") // dont check collision with yourseld
 					continue;
 				// check for a clash when players are on neighboor tiles and move into each other :  .....xx......
-				if (playersWantedPositions[currentPlayer.gamepadId].x == playersCurrentPositions[otherPlayer.gamepadId].x
-					&& playersWantedPositions[currentPlayer.gamepadId].y == playersCurrentPositions[otherPlayer.gamepadId].y
-					&& playersWantedPositions[otherPlayer.gamepadId].x == playersCurrentPositions[currentPlayer.gamepadId].x
-					&& playersWantedPositions[otherPlayer.gamepadId].y == playersCurrentPositions[currentPlayer.gamepadId].y)
+				if (playersWantedPositions[p].x == playersCurrentPositions[o].x
+					&& playersWantedPositions[p].y == playersCurrentPositions[o].y
+					&& playersWantedPositions[o].x == playersCurrentPositions[p].x
+					&& playersWantedPositions[o].y == playersCurrentPositions[p].y)
 				{
 					collided = true;
 					console.log("collision between " + p + " and " + o);
@@ -107,8 +107,8 @@ function GameMaster(players)
 					break;
 				}
 				// check for a clash when players are separated by one tile and move into each other :  .....x.x.....
-				else if (playersWantedPositions[currentPlayer.gamepadId].x == playersWantedPositions[otherPlayer.gamepadId].x
-					&& playersWantedPositions[currentPlayer.gamepadId].y == playersWantedPositions[otherPlayer.gamepadId].y)
+				else if (playersWantedPositions[p].x == playersWantedPositions[o].x
+					&& playersWantedPositions[p].y == playersWantedPositions[o].y)
 				{
 					collided = true;
 					console.log("collision between " + p + " and " + o);
@@ -120,11 +120,11 @@ function GameMaster(players)
 
 			if (collided == false) // valid move
 			{
-				playersPositions[playersWantedPositions[currentPlayer.gamepadId].y][playersWantedPositions[currentPlayer.gamepadId].x] = currentPlayer;
+				playersPositions[playersWantedPositions[p].y][playersWantedPositions[p].x] = currentPlayer;
 			}
 			else // cant move : you and the other stay in place
 			{
-				playersPositions[playersCurrentPositions[currentPlayer.gamepadId].y][playersCurrentPositions[currentPlayer.gamepadId].x] = currentPlayer;
+				playersPositions[playersCurrentPositions[p].y][playersCurrentPositions[p].x] = currentPlayer;
 				playersPositions[playersCurrentPositions[playerCollidedWith.gamepadId].y][playersCurrentPositions[playerCollidedWith.gamepadId].x] = playerCollidedWith;
 				collisionsDone.push(playerCollidedWith);
 			}
@@ -135,7 +135,7 @@ function GameMaster(players)
 		for(p in this.players)
 		{
 			var currentPlayer = this.players[p];
-			if (playersWantedAttacks[currentPlayer.gamepadId].x != -1) // that player has an attack to do
+			if (playersWantedAttacks[p].x != -1) // that player has an attack to do
 			{
 				//Check if someone was killed
 				for(o in this.players)
@@ -143,14 +143,14 @@ function GameMaster(players)
 					var otherPlayer = this.players[o];
 					if (currentPlayer == otherPlayer) // dont check collision with yourself
 						continue;
-					if (playersWantedAttacks[currentPlayer.gamepadId].x == playersWantedPositions[otherPlayer.gamepadId].x
-						&&  playersWantedAttacks[currentPlayer.gamepadId].y ==playersWantedPositions[otherPlayer.gamepadId].y)
+					if (playersWantedAttacks[p].x == playersWantedPositions[o].x
+						&&  playersWantedAttacks[p].y ==playersWantedPositions[o].y)
 					{
 						// we caught another player with the attack
 						// Check if he counters...
-						if (playersWantedAttacks[otherPlayer.gamepadId].x != -1
-							&& playersWantedAttacks[otherPlayer.gamepadId].x == playersWantedPositions[currentPlayer.gamepadId].x
-						&&  playersWantedAttacks[otherPlayer.gamepadId].y ==playersWantedPositions[currentPlayer.gamepadId].y)
+						if (playersWantedAttacks[o].x != -1
+							&& playersWantedAttacks[o].x == playersWantedPositions[p].x
+						&&  playersWantedAttacks[o].y ==playersWantedPositions[p].y)
 						{
 							console.log("counter !");
 						}
