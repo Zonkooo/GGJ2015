@@ -104,11 +104,11 @@ function preloadAssets()
 
 	// render splash screens
 	startProgScreen = new createjs.Bitmap(imgStartProg);
-	startProgScreen.x = 400;
-	startProgScreen.y = 200;
+	startProgScreen.x = 340;
+	startProgScreen.y = 130;
 	endProgScreen = new createjs.Bitmap(imgEndProg);
-	endProgScreen.x = 400;
-	endProgScreen.y = 200;
+	endProgScreen.x = 390;
+	endProgScreen.y = 150;
 
 
 	createjs.Sound.addEventListener("fileload", preloadUpdate);
