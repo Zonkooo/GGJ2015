@@ -73,7 +73,7 @@ function preloadAssets()
 	imgGround.src = "media/env/roads.png";
 
 	imgFireball.onload = preloadUpdate();
-	imgFireball.src = "media/fireball.png";
+	imgFireball.src = "media/fire.png";
 
 	imgEmptyGem.onload = preloadUpdate();
 	imgEmptyGem.src = "media/spr_gui_gem_empty.png";

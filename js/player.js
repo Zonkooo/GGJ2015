@@ -10,7 +10,7 @@ ATTACKRIGHT = "attright";
 ATTACKUP = "attup";
 ATTACKDOWN = "attdown";
 
-var toIdle = [];
+toIdle = [];
 toIdle["movleft"]="left";
 toIdle["movright"]="right";
 toIdle["movup"]="up";
@@ -49,9 +49,18 @@ function Player(bitmap, position, controls, gamepadId)
 
 	this.controls = controls;
 
-	this.attackBitmap = new createjs.Bitmap(imgFireball);
-	this.attackBitmap.x = -gridInitX;
-	this.attackBitmap.y = -gridInitY;
+	var attackSpSheet = new createjs.SpriteSheet({
+			images: [imgFireball],
+			frames: {height: 225, width: 225, regX: 75, regY: 75},
+			animations: {
+				down: [0, 0],
+				up: [1, 1],
+				right: [2, 2],
+				left: [3, 3],
+			}
+		});
+	this.attackBitmap = new createjs.Sprite(attackSpSheet);
+	this.attackBitmap.visible = false;
 	stage.addChild(this.attackBitmap);
 
 	//called at each tick of animation phase

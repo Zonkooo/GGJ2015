@@ -63,6 +63,15 @@ function GameMaster(players)
 				}
 
 				player.internalBitmap.gotoAndPlay(action);
+
+				//Display attack
+				if(action.indexOf("att") == 0)
+				{
+					player.attackBitmap.x = player.internalBitmap.x;
+					player.attackBitmap.y = player.internalBitmap.y;
+					player.attackBitmap.gotoAndPlay(toIdle[action]);
+					player.attackBitmap.visible = true;
+				}
 			}
 
 			playersCurrentPositions.push({x:player.gridPosition.x, y:player.gridPosition.y});
@@ -128,11 +137,6 @@ function GameMaster(players)
 			var currentPlayer = this.players[p];
 			if (playersWantedAttacks[currentPlayer.gamepadId].x != -1) // that player has an attack to do
 			{
-				//Display attack
-				currentPlayer.attackBitmap.x = gridInitX + blockSize * playersWantedAttacks[currentPlayer.gamepadId].x;
-				currentPlayer.attackBitmap.y = gridInitY + blockSize * playersWantedAttacks[currentPlayer.gamepadId].y;
-				currentPlayer.attackBitmap.visible = true;
-
 				//Check if someone was killed
 				for(o in this.players)
 				{
