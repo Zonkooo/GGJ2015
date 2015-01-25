@@ -15,7 +15,7 @@ function Board(sprites)
 	"TaffaafafaafaM",
 	];
 
-	level = [ // 14 x 7 squares
+	level3 = [ // 14 x 7 squares
 	"JaRXJabZdRXIZE",
 	"TRgEYBXXDgZeKF",
 	"XSeXSfddZLXgLX",
@@ -23,6 +23,16 @@ function Board(sprites)
 	"XGeXJdffdPXgPX",
 	"KbcZeVXXgcbeUQ",
 	"UaNXSfFHfNXUaM",
+	];
+
+	level = [ // 14 x 7 squares
+	"IZZZPXXXXccccc",
+	"gEXXgPXXGcXXcc",
+	"VXXcccdddfcXXc",
+	"gZZeXgcceXgccc",
+	"VXXTdfffcdcXXc",
+	"gPXXgFXXccXXcc",
+	"DUaaMXXXXccccc",
 	];
 
 	texturesPerBlock = [];
