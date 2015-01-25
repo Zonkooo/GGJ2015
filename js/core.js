@@ -303,7 +303,7 @@ function update(event)
 {
 	if (gameState == "win")
 	{
-		if (isKeyPressed[13]) {
+		if (isKeyPressed[32]) {
 			location.reload();
 		} else {
 			return;
@@ -421,7 +421,7 @@ function update(event)
 	if (nbalive == 1) {
 		var win = new createjs.Bitmap(imgWin);
 		win.x = 320;
-		win.y = 14;
+		win.y = 0;
 		stage.addChild(win);
 		gameState = "win";
 	}
