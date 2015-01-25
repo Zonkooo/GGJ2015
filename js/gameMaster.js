@@ -159,12 +159,16 @@ function GameMaster(players)
 						&&  playersWantedAttacks[o].y ==playersUpdatedPositions[p].y)
 						{
 							currentPlayer.attackBitmap.gotoAndPlay("counter" + currentPlayer.attackBitmap.currentAnimation);
-							console.log("counter !");
 						}
 						else // or else he dies
 						{
 							otherPlayer.aliveState = "dead";
 						}
+						createjs.Sound.play(attackHitSound);
+					}
+					else
+					{
+						createjs.Sound.play(attackMissSound);
 					}
 				}
 			}
@@ -193,6 +197,7 @@ function GameMaster(players)
 				ashes.x = player.internalBitmap.x;
 				ashes.y = player.internalBitmap.y;
 
+				stage.removeChild(player.attackBitmap);
 				stage.removeChild(player.internalBitmap);
 				stage.addChild(ashes);
 

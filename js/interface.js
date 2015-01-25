@@ -40,7 +40,7 @@ function Interface()
 		stage.addChildAt(bg, 0);
 
 		//play ost
-		//createjs.Sound.play(soundtrackSound);
+		createjs.Sound.play(soundtrackSound);
  	}
 
 
@@ -51,9 +51,14 @@ function Interface()
 		for (playerIndex = 0; playerIndex < players.length ; ++playerIndex)
 		{
 		    var pos = this.positions[playerIndex];
+
 			for (index = 0; index < maxActionsToProgram ; ++index)
 			{
-				if (players[playerIndex].programmedActions.length > index) {
+				var drawfull = index < players[playerIndex].programmedActions.length;
+			    if(gameState == "playActions")
+			    	drawfull = index > maxActionsToProgram - players[playerIndex].programmedActions.length - 1;
+
+				if (drawfull) {
 					if (playerIndex == 0) {
 			    		this.uiElements[playerIndex][index].image = imgGreenGem;
 			    	} else if (playerIndex == 1) {
