@@ -10,6 +10,20 @@ ATTACKRIGHT = "attright";
 ATTACKUP = "attup";
 ATTACKDOWN = "attdown";
 
+var toIdle = [];
+toIdle["movleft"]="left";
+toIdle["movright"]="right";
+toIdle["movup"]="up";
+toIdle["movdown"]="down";
+toIdle["attleft"]="left";
+toIdle["attright"]="right";
+toIdle["attup"]="up";
+toIdle["attdown"]="down";
+toIdle["left"]="left";
+toIdle["right"]="right";
+toIdle["up"]="up";
+toIdle["down"]="down";
+
 var verticalOffSet = -20;
 
 function Player(bitmap, position, controls, gamepadId)
@@ -53,7 +67,7 @@ function Player(bitmap, position, controls, gamepadId)
 			if(this.internalBitmap.x == target.x && this.internalBitmap.y == target.y)
 			{
 				this.animDone = true;
-				this.internalBitmap.gotoAndPlay(this.internalBitmap.currentAnimation.substring(3));
+				this.internalBitmap.gotoAndPlay(toIdle[this.internalBitmap.currentAnimation]);
 			}
 
 			var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;

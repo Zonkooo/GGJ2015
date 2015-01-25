@@ -168,15 +168,15 @@ function getPlayerSpSheet(num)
 				images: [imgPlayers[num-1]],
 				frames: {height: 225, width: 225, regX: 75, regY: 75},
 				animations: {
-					movdown: [0, 3, "down", 0.1],
-					movup: [8, 11, "up", 0.1],
-					movright: [16, 19, "right", 0.1],
-					movleft: [24, 27, "left", 0.1],
+					movdown: [0, 3, "movdown", 0.1],
+					movup: [8, 11, "movup", 0.1],
+					movright: [16, 19, "movright", 0.1],
+					movleft: [24, 27, "movleft", 0.1],
 
-					down: [4, 5, "idledown", 0.1],
-					up: [12, 13, "idleup", 0.1],
-					right: [20, 21, "idleright", 0.1],
-					left: [28, 29, "idleleft", 0.1],
+					down: [4, 5, "down", 0.1],
+					up: [12, 13, "up", 0.1],
+					right: [20, 21, "right", 0.1],
+					left: [28, 29, "left", 0.1],
 
 					attdown: [6, 6],
 					attup: [14, 14],
