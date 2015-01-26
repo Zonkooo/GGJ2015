@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 2;
+var preloadTotal = 1;
 
 var stage;
 var isKeyPressed = [];
@@ -25,9 +25,14 @@ function preloadAssets()
 	imgBg.onload = preloadUpdate();
 	imgBg.src = "media/titre_spritesheet.png";
 
-	createjs.Sound.addEventListener("fileload", preloadUpdate);
+	createjs.Sound.addEventListener("fileload", playsound);
 	createjs.Sound.alternateExtensions = ["mp3"];
 	createjs.Sound.registerSound("media/sound/mus_loop.ogg", "soundtrack");
+}
+
+function playsound()
+{
+	createjs.Sound.play("soundtrack", {loop:-1});
 }
 
 function preloadUpdate()
@@ -75,8 +80,6 @@ function launchGame()
 	stage.addChild(btn4p);
 
 	stage.addChild(new createjs.Bitmap(imgBg));
-
-	createjs.Sound.play("soundtrack");
 
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
