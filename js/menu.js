@@ -1,17 +1,12 @@
 var preloadCount = 0;
-var preloadTotal = 5;
+var preloadTotal = 1;
 
 var stage;
 var isKeyPressed = [];
-FPS = 60;
+FPS = 5;
 var gamepads = [];
 
 var imgBg = new Image();
-var imgCred = new Image();
-
-var img2p = new Image();
-var img3p = new Image();
-var img4p = new Image();
 
 function startGame()
 {
@@ -28,19 +23,7 @@ function startGame()
 function preloadAssets()
 {
 	imgBg.onload = preloadUpdate();
-	imgBg.src = "media/menubg.png";
-
-	imgCred.onload = preloadUpdate();
-	imgCred.src = "media/spr_menu_credits.png";
-
-	img2p.onload = preloadUpdate();
-	img2p.src = "media/spr_menu_2.png";
-	img3p.onload = preloadUpdate();
-	img3p.src = "media/spr_menu_3.png";
-	img4p.onload = preloadUpdate();
-	img4p.src = "media/spr_menu_4.png";
-
-	createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, 1);
+	imgBg.src = "media/titre_spritesheet.png";
 }
 
 function preloadUpdate()
@@ -53,31 +36,41 @@ function preloadUpdate()
 function launchGame()
 {
 	initGamepad();
+	stage.enableMouseOver();
 
-	var bg = new createjs.Bitmap(imgBg);
-	stage.addChild(bg);
+	var spSheet = new createjs.SpriteSheet({
+				images: [imgBg],
+				frames: {height: 700, width: 1200},
+				animations: {
+					incoming: [0, 7, "sta", 0.3],
+					sta: [8, 9, "sta", 0.3],
+				}
+			});
+	var sprite = new createjs.Sprite(spSheet, "incoming");
 
-	var cred = new createjs.Bitmap(imgCred);
-	cred.addEventListener("click", function(event) { location = "credits.html"; })
-	cred.x = 700;
-	cred.y = 200;
+	var cred = new createjs.Shape();
+	cred.graphics.beginFill("#000").rect(950, 590, 200, 70);
+	cred.addEventListener("click", function(event) { location = "credits.html"; });
+	cred.cursor = "pointer";
 	stage.addChild(cred);
 
-	var btn2p = new createjs.Bitmap(img2p);
-	btn2p.addEventListener("click", function(event) { gotoGame(2); })
-	btn2p.x = 200;
-	btn2p.y = 500;
+	var btn2p = new createjs.Shape();
+	btn2p.graphics.beginFill("#000000").drawRect(455, 480, 100, 100);
+	btn2p.addEventListener("click", function(event) { gotoGame(2); });
+	btn2p.cursor = "pointer";
 	stage.addChild(btn2p);
-	var btn3p = new createjs.Bitmap(img3p);
-	btn3p.addEventListener("click", function(event) { gotoGame(3); })
-	btn3p.x = 400;
-	btn3p.y = 500;
+	var btn3p = new createjs.Shape();
+	btn3p.graphics.beginFill("#000000").drawRect(580, 480, 100, 100);
+	btn3p.addEventListener("click", function(event) { gotoGame(3); });
+	btn3p.cursor = "pointer";
 	stage.addChild(btn3p);
-	var btn4p = new createjs.Bitmap(img4p);
-	btn4p.addEventListener("click", function(event) { gotoGame(4); })
-	btn4p.x = 600;
-	btn4p.y = 500;
+	var btn4p = new createjs.Shape();
+	btn4p.graphics.beginFill("#000000").drawRect(697, 480, 100, 100);
+	btn4p.addEventListener("click", function(event) { gotoGame(4); });
+	btn4p.cursor = "pointer";
 	stage.addChild(btn4p);
+
+	stage.addChild(new createjs.Bitmap(imgBg));
 
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update);
@@ -101,8 +94,6 @@ function code(e)
 
 function update(event)
 {
-	if(isKeyPressed[13])
-		gotoGame();
 	// Update main scene
 	stage.update();
 }
