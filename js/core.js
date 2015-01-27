@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 25;
+var preloadTotal = 24;
 
 var stage;
 var imgPlayers = [];
@@ -21,7 +21,6 @@ var imgBg;
 
 var imgWin = [];
 
-var imgStartProg;
 var imgEndProg;
 
 var commandSetSound = "commandSet";
@@ -45,7 +44,6 @@ var gameState = "programActions";
 
 var gamepads = [];
 
-var startProgScreen;
 var endProgScreen;
 
 var movePool = [];
@@ -108,7 +106,6 @@ function preloadAssets()
 	imgYellowGem = loadImage("media/spr_gui_gem_jaune.png");
 	imgPinkGem = loadImage("media/spr_gui_gem_purple.png");
 	imgGreenGem = loadImage("media/spr_gui_gem_verte.png");
-	imgStartProg = loadImage("media/spr_gui_announcer_whatdo.png");
 	imgEndProg = loadImage("media/spr_gui_announcer_herewego.png");
 	imgMoveIcon = loadImage("media/moveicon.png");
 	imgAttackIcon = loadImage("media/attackicon.png");
@@ -214,10 +211,7 @@ function launchGame()
 		players.push(new Player(spriteP4, {x:13, y:6}, {up:0, down:0, left:0, right:0, attackup:0, attackdown:0, attackleft:0, attackright:0}, 3));
 	}
 
-	// render splash screens
-	startProgScreen = new createjs.Bitmap(imgStartProg);
-	startProgScreen.x = 340;
-	startProgScreen.y = 130;
+	// render splash screen
 	endProgScreen = new createjs.Bitmap(imgEndProg);
 	endProgScreen.x = 390;
 	endProgScreen.y = 150;
