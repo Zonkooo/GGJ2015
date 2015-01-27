@@ -100,7 +100,7 @@ function Player(bitmap, position, controls, gamepadId)
 			// redraw ashes before the zilla
 			if (ashesPositions[this.gridPosition.y + dy][this.gridPosition.x + dx] != undefined)
 			{
-				var ashes = ashesPositions[this.gridPosition.y][this.gridPosition.x];
+				var ashes = ashesPositions[this.gridPosition.y + dy][this.gridPosition.x + dx];
 				stage.removeChild(ashes);
 				stage.addChildAt(ashes, index+1);
 			}
