@@ -1,6 +1,3 @@
-var preloadCount = 0;
-var preloadTotal = 1;
-
 var stage;
 FPS = 5;
 
@@ -20,7 +17,7 @@ function startGame()
 
 function preloadAssets()
 {
-	imgBg.onload = preloadUpdate();
+	imgBg.onload = function(){launchGame();};
 	imgBg.src = "media/titre_spritesheet.png";
 
 	createjs.Sound.addEventListener("fileload", playsound);
@@ -31,13 +28,6 @@ function preloadAssets()
 function playsound()
 {
 	createjs.Sound.play("soundtrack", {loop:-1});
-}
-
-function preloadUpdate()
-{
-	preloadCount++;
-	if(preloadCount == preloadTotal)
-		launchGame();
 }
 
 function launchGame()
