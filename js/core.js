@@ -1,28 +1,28 @@
 var preloadCount = 0;
-var preloadTotal = 26;
+var preloadTotal = 25;
 
 var stage;
 var imgPlayers = [];
-var buildingSprites = [];
-var imgGround = new Image();
-var imgFireball = new Image();
-var imgAshes = new Image();
+var imgBuildings = [];
+var imgGround;
+var imgFireball;
+var imgAshes;
 
-var imgAttackIcon = new Image();
-var imgMoveIcon = new Image();
+var imgAttackIcon;
+var imgMoveIcon;
 
-var imgEmptyGem = new Image();
-var imgBlueGem = new Image();
-var imgYellowGem = new Image();
-var imgPinkGem = new Image();
-var imgGreenGem = new Image();
+var imgEmptyGem;
+var imgBlueGem;
+var imgYellowGem;
+var imgPinkGem;
+var imgGreenGem;
 
-var imgBg = new Image();
+var imgBg;
 
 var imgWin = [];
 
-var imgStartProg = new Image();
-var imgEndProg = new Image();
+var imgStartProg;
+var imgEndProg;
 
 var commandSetSound = "commandSet";
 var commandCompleteSound = "commandComplete";
@@ -66,13 +66,7 @@ function startGame()
 
 function preloadAssets()
 {
-
-	imgBg.onload = preloadUpdate();
-	imgBg.src = "media/spr_gui_background.png";
-
-	imgWin.onload = preloadUpdate();
-	imgWin.src = "media/lewin.png";
-
+	//sounds
 	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
 	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
@@ -86,78 +80,38 @@ function preloadAssets()
 		createjs.Sound.registerSound("media/sound/mus_loop.ogg", soundtrackSound, 1);
 	}
 
+	//sprites
 	for(i = 1; i <= 4; i++)
 	{
-		var player = new Image();
-		player.onload = preloadUpdate();
-		player.src = "media/gozilla_spritesheet" + i + ".png";
+		var player = loadImage("media/gozilla_spritesheet" + i + ".png");
 		imgPlayers.push(player);
 	}
 
 	for(i = 1; i <= 4; i++)
 	{
-		var win = new Image();
-		win.onload = preloadUpdate();
-		win.src = "media/victory" + i + ".png";
+		var win = loadImage("media/victory" + i + ".png");
 		imgWin.push(win);
 	}
 
 	for(i = 1; i <= 4; i++)
 	{
-		var building = new Image();
-		building.onload = preloadUpdate();
-		building.src = "media/env/building" + i + ".png";
-
-		var spriteBuilding = new createjs.SpriteSheet({
-				images: [building],
-				frames: {height: 100, width: 75},
-				animations: {
-					idle: [0, 2, "idle", 0.01 * i]
-				}
-			});
-		buildingSprites.push(spriteBuilding);
-
+		var building = loadImage("media/env/building" + i + ".png");
+		imgBuildings.push(building);
 	}
 
-	imgGround.onload = preloadUpdate();
-	imgGround.src = "media/env/roads.png";
-
-	imgFireball.onload = preloadUpdate();
-	imgFireball.src = "media/fire.png";
-
-	imgAshes.onload = preloadUpdate();
-	imgAshes.src = "media/ashes.png";
-
-	imgEmptyGem.onload = preloadUpdate();
-	imgEmptyGem.src = "media/spr_gui_gem_empty.png";
-	imgBlueGem.onload = preloadUpdate();
-	imgBlueGem.src = "media/spr_gui_gem_red.png";
-	imgYellowGem.onload = preloadUpdate();
-	imgYellowGem.src = "media/spr_gui_gem_jaune.png";
-	imgPinkGem.onload = preloadUpdate();
-	imgPinkGem.src = "media/spr_gui_gem_purple.png";
-	imgGreenGem.onload = preloadUpdate();
-	imgGreenGem.src = "media/spr_gui_gem_verte.png";
-
-	imgStartProg.onload = preloadUpdate();
-	imgStartProg.src = "media/spr_gui_announcer_whatdo.png";
-	imgEndProg.onload = preloadUpdate();
-	imgEndProg.src = "media/spr_gui_announcer_herewego.png";
-
-	imgMoveIcon.onload = preloadUpdate();
-	imgMoveIcon.src = "media/moveicon.png";
-	imgAttackIcon.onload = preloadUpdate();
-	imgAttackIcon.src = "media/attackicon.png";
-
-	// render splash screens
-	startProgScreen = new createjs.Bitmap(imgStartProg);
-	startProgScreen.x = 340;
-	startProgScreen.y = 130;
-	endProgScreen = new createjs.Bitmap(imgEndProg);
-	endProgScreen.x = 390;
-	endProgScreen.y = 150;
-
-
+	imgBg = loadImage("media/spr_gui_background.png");
+	imgGround = loadImage("media/env/roads.png");
+	imgFireball = loadImage("media/fire.png");
+	imgAshes = loadImage("media/ashes.png");
+	imgEmptyGem = loadImage("media/spr_gui_gem_empty.png");
+	imgBlueGem = loadImage("media/spr_gui_gem_red.png");
+	imgYellowGem = loadImage("media/spr_gui_gem_jaune.png");
+	imgPinkGem = loadImage("media/spr_gui_gem_purple.png");
+	imgGreenGem = loadImage("media/spr_gui_gem_verte.png");
+	imgStartProg = loadImage("media/spr_gui_announcer_whatdo.png");
+	imgEndProg = loadImage("media/spr_gui_announcer_herewego.png");
+	imgMoveIcon = loadImage("media/moveicon.png");
+	imgAttackIcon = loadImage("media/attackicon.png");
 }
 
 function playOST(event)
@@ -167,11 +121,16 @@ function playOST(event)
 		createjs.Sound.play(soundtrackSound, {loop:-1});
 }
 
-function preloadUpdate()
+function loadImage(src)
 {
-	preloadCount++;
-	if(preloadCount == preloadTotal)
-		launchGame();
+	var img = new Image();
+	img.onload = function(event){
+		preloadCount++;
+		if(preloadCount == preloadTotal)
+			launchGame();
+	};
+	img.src = src;
+	return img;
 }
 
 function launchGame()
@@ -179,7 +138,18 @@ function launchGame()
 	initGamepad();
 
 	var sprites = [];
-	sprites['X'] = buildingSprites;
+	sprites['X'] = [];
+	for(b in imgBuildings)
+	{
+		var spriteBuilding = new createjs.SpriteSheet({
+				images: [imgBuildings[b]],
+				frames: {height: 100, width: 75},
+				animations: {
+					idle: [0, 2, "idle", 0.01 * i]
+				}
+			});
+		sprites['X'].push(spriteBuilding);
+	}
 
 	var groundSheet = new createjs.SpriteSheet({
 			images: [imgGround],
@@ -243,6 +213,14 @@ function launchGame()
 		var spriteP4 = new createjs.Sprite(getPlayerSpSheet(4), "left");
 		players.push(new Player(spriteP4, {x:13, y:6}, {up:0, down:0, left:0, right:0, attackup:0, attackdown:0, attackleft:0, attackright:0}, 3));
 	}
+
+	// render splash screens
+	startProgScreen = new createjs.Bitmap(imgStartProg);
+	startProgScreen.x = 340;
+	startProgScreen.y = 130;
+	endProgScreen = new createjs.Bitmap(imgEndProg);
+	endProgScreen.x = 390;
+	endProgScreen.y = 150;
 
 	GM = new GameMaster(players);
 	interfaceElement = new Interface();

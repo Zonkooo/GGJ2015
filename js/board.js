@@ -60,6 +60,7 @@ function Board(sprites)
 				}
 				else
 				{
+					var buildingSprites = this.textures['X'];
 					var block = new createjs.Sprite(buildingSprites[Math.floor(Math.random() * buildingSprites.length)], "idle");
 				}
 				block.regY = blockExtraHeight;
