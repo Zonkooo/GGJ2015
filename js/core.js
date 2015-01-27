@@ -1,5 +1,5 @@
 var preloadCount = 0;
-var preloadTotal = 31;
+var preloadTotal = 26;
 
 var stage;
 var imgPlayers = [];
@@ -73,12 +73,12 @@ function preloadAssets()
 	imgWin.onload = preloadUpdate();
 	imgWin.src = "media/lewin.png";
 
-	createjs.Sound.addEventListener("fileload", preloadUpdate);
 	createjs.Sound.registerSound("media/sound/sfx_sound_combo.wav", commandSetSound, maxActionsToProgram*4);
 	createjs.Sound.registerSound("media/sound/sfx_sound_finishcombo.wav", commandCompleteSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_fail.mp3", attackMissSound, 4);
 	createjs.Sound.registerSound("media/sound/sfx_attack_sucess.mp3", attackHitSound, 4);
 
+	createjs.Sound.addEventListener("fileload", playOST);
 	if (!!window.chrome) { // running on chrome
 		createjs.Sound.registerSound("media/sound/mus_loop.mp3", soundtrackSound, 1);
 	}
@@ -158,6 +158,13 @@ function preloadAssets()
 	endProgScreen.y = 150;
 
 
+}
+
+function playOST(event)
+{
+	//play ost
+	if(event.id == soundtrackSound)
+		createjs.Sound.play(soundtrackSound, {loop:-1});
 }
 
 function preloadUpdate()

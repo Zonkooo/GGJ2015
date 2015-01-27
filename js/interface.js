@@ -37,9 +37,6 @@ function Interface()
 		var bg = new createjs.Bitmap(imgBg);
 		bg.alpha = 0.9;
 		stage.addChildAt(bg, 0);
-
-		//play ost
-		createjs.Sound.play(soundtrackSound);
  	}
 
 
