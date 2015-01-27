@@ -25,24 +25,23 @@ function preloadAssets()
 {
 	for(i = 1; i <= 5; i++)
 	{
-		var line = new Image();
-		line.onload = preloadUpdate();
-		line.src = "media/credits/spr_menu_title_" + i + ".png";
+		var line = loadImage("media/credits/spr_menu_title_" + i + ".png");
 		text.push(line);
 	}
-
-	imgBg.onload = preloadUpdate();
-	imgBg.src = "media/credits/spr_menu_background.png";
-
-	imgCred.onload = preloadUpdate();
-	imgCred.src = "media/credits/spr_menu_cred.png";
+	imgBg = loadImage("media/credits/spr_menu_background.png");
+	imgCred = loadImage("media/credits/spr_menu_cred.png");
 }
 
-function preloadUpdate()
+function loadImage(src)
 {
-	preloadCount++;
-	if(preloadCount == preloadTotal)
-		launchGame();
+	var img = new Image();
+	img.onload = function(event){
+		preloadCount++;
+		if(preloadCount == preloadTotal)
+			launchGame();
+	};
+	img.src = src;
+	return img;
 }
 
 function launchGame()
