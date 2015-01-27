@@ -1,3 +1,6 @@
+ashesPositions = [[],[],[],[],[],[],[],];
+
+
 function GameMaster(players)
 {
 	this.players = players;
@@ -200,6 +203,8 @@ function GameMaster(players)
 				stage.removeChild(player.attackBitmap);
 				stage.removeChild(player.internalBitmap);
 				stage.addChild(ashes);
+
+				ashesPositions[player.gridPosition.y][player.gridPosition.x] = ashes;
 
 				players.splice(i, 1);
 				i--; //so evil

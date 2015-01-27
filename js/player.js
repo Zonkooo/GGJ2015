@@ -88,13 +88,25 @@ function Player(bitmap, position, controls, gamepadId)
 				this.internalBitmap.gotoAndPlay(toIdle[this.internalBitmap.currentAnimation]);
 			}
 
+
+			// redraw zilla before building
 			var dx = target.x - this.internalBitmap.x < 0 ? 1 : 0;
 			var dy = target.y - this.internalBitmap.y < 0 ? 1 : 0;
 			var redrawJustBefore = texturesPerBlock[this.gridPosition.y + dy][this.gridPosition.x + dx];
-
 			stage.removeChild(this.internalBitmap);
 			var index = stage.getChildIndex(redrawJustBefore);
 			stage.addChildAt(this.internalBitmap, index+1);
+
+			// redraw ashes before the zilla
+			if (ashesPositions[this.gridPosition.y + dy][this.gridPosition.x + dx] != undefined)
+			{
+				var ashes = ashesPositions[this.gridPosition.y][this.gridPosition.x];
+				stage.removeChild(ashes);
+				stage.addChildAt(ashes, index+1);
+			}
+
+
+
 		}
 	}
 
