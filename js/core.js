@@ -220,21 +220,21 @@ function launchGame()
 		nbPlayers = 4;
 
 	var spriteP1 = new createjs.Sprite(getPlayerSpSheet(1), "right");
-	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39, attackup:49, attackdown:50, attackleft:51, attackright:52}, 0));
+	players.push(new Player(spriteP1, {x:0, y:0}, {up:38, down:40, left:37, right:39, attackup:79, attackdown:76, attackleft:75, attackright:77}, 0));
 
 	var spriteP2 = new createjs.Sprite(getPlayerSpSheet(2), "left");
-	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68, attackup:53, attackdown:54, attackleft:55, attackright:56}, 1));
+	players.push(new Player(spriteP2, {x:13, y:0}, {up:90, down:83, left:81, right:68, attackup:84, attackdown:71, attackleft:70, attackright:72}, 1));
 
 	if(nbPlayers > 2)
 	{
 		var spriteP3 = new createjs.Sprite(getPlayerSpSheet(3), "right");
-		players.push(new Player(spriteP3, {x:0, y:6}, {up:79, down:76, left:75, right:77, attackup:96, attackdown:97, attackleft:98, attackright:99}, 2));
+		players.push(new Player(spriteP3, {x:0, y:6}, {up:0, down:0, left:0, right:0, attackup:0, attackdown:0, attackleft:0, attackright:0}, 2));
 	}
 
 	if(nbPlayers > 3)
 	{
 		var spriteP4 = new createjs.Sprite(getPlayerSpSheet(4), "left");
-		players.push(new Player(spriteP4, {x:13, y:6}, {up:84, down:71, left:70, right:72, attackup:100, attackdown:101, attackleft:102, attackright:103}, 3));
+		players.push(new Player(spriteP4, {x:13, y:6}, {up:0, down:0, left:0, right:0, attackup:0, attackdown:0, attackleft:0, attackright:0}, 3));
 	}
 
 	GM = new GameMaster(players);
